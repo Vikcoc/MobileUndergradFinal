@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Undergrad</string>
+
+	<!--Sign in-->
+	<string name="sign_in_top">"Sign in to use the app"</string>
+	<string name="sign_in_username">"Username"</string>
+	<string name="sign_in_password">"Password"</string>
+	<string name="sign_in_sign_in">"Sign in"</string>
+	<string name="sign_in_sign_up">"Or sign up if you don't have an account"</string>
+
+</resources>
