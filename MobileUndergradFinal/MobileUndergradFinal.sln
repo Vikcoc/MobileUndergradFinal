@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileUndergradFinal", "MobileUndergradFinal\MobileUndergradFinal.csproj", "{E043C283-C0B4-451E-A4EA-A20B14D0B5A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Network", "Network\Network.csproj", "{BD510B8C-A77E-4B3F-A09C-F6368A57F233}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{7F809B9D-8F42-426F-BA38-4A1AC1BBD0CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,14 @@ Global
 		{E043C283-C0B4-451E-A4EA-A20B14D0B5A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E043C283-C0B4-451E-A4EA-A20B14D0B5A9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E043C283-C0B4-451E-A4EA-A20B14D0B5A9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{BD510B8C-A77E-4B3F-A09C-F6368A57F233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD510B8C-A77E-4B3F-A09C-F6368A57F233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD510B8C-A77E-4B3F-A09C-F6368A57F233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD510B8C-A77E-4B3F-A09C-F6368A57F233}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F809B9D-8F42-426F-BA38-4A1AC1BBD0CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F809B9D-8F42-426F-BA38-4A1AC1BBD0CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F809B9D-8F42-426F-BA38-4A1AC1BBD0CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F809B9D-8F42-426F-BA38-4A1AC1BBD0CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
