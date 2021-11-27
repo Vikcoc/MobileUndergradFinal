@@ -14,12 +14,12 @@ namespace BusinessLogic
         string PasswordError { get; set; }
         Action OnPasswordTouch { get; set; }
 
-        Action OnSubmitButtonPress { get; set; }
-        Func<Task> OnGoToSignUpPress { get; set; }
+        Func<Task> OnSubmitButtonPress { get; set; }
+        Action OnGoToSignUpPress { get; set; }
         Action OnGoBackPress { get; set; }
 
-        ISignUpScreen GoToSignUp();
-        IDashboardScreen GoToDashboard();
+        void GoToSignUp();
+        void GoToDashboard();
         void GoBack();
 
         void StartLoadingState();

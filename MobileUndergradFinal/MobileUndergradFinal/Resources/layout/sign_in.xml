@@ -37,9 +37,10 @@
         app:layout_constraintVertical_bias="0.237">
 
         <com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/textInputEditText1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapSentences"
+            android:inputType="text"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,6 +60,7 @@
         app:layout_constraintVertical_bias="0.051">
 
         <com.google.android.material.textfield.TextInputEditText
+	        android:id="@+id/textInputEditText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"

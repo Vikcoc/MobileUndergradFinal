@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
@@ -21,18 +22,24 @@ namespace Network
             _onError = onError;
         }
 
-        public async Task GetAsync<T>([NotNull] string path, Action<T> onSuccess) where T : class, new()
+        public async Task GetAsync<T>([NotNull] string path, Action<T> onSuccess) where T : class
         {
             await MakeRequestAsync<T>(HttpMethod.Get, path, onSuccess);
         }
 
-        private async Task MakeRequestAsync<T>([NotNull] HttpMethod method, [NotNull] string path, Action<T> onSuccess, object body = null) where T : class, new()
+        public async Task PostAsync<T>([NotNull] string path, object body, Action<T> onSuccess) where T : class
+        {
+            await MakeRequestAsync<T>(HttpMethod.Post, path, onSuccess, body);
+        }
+
+        private async Task MakeRequestAsync<T>([NotNull] HttpMethod method, [NotNull] string path, Action<T> onSuccess, object body = null) where T : class
         {
             HttpResponseMessage response = null;
             try
             {
                 var client = new HttpClient();
                 var request = new HttpRequestMessage(method, _address + "/" + path);
+                Debug.WriteLine(_address + "/" + path);
                 switch (body)
                 {
                     case null:
@@ -74,8 +81,16 @@ namespace Network
                 else
                 {
                     var res = await response.Content.ReadAsStringAsync();
-                    onSuccess?.Invoke(JsonConvert.DeserializeObject<T>(res));
+                    if (typeof(T) == typeof(string))
+                        onSuccess?.Invoke(res as T);
+                    else
+                        onSuccess?.Invoke(JsonConvert.DeserializeObject<T>(res));
                 }
+            }
+            else
+            {
+                var res = await response.Content.ReadAsStringAsync();
+                _onError?.Invoke(JsonConvert.DeserializeObject<List<string>>(res));
             }
         }
     }

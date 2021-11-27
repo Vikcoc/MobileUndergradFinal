@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
+using Communication.AccountDto;
 using Network;
 
 namespace BusinessLogic
@@ -13,7 +16,7 @@ namespace BusinessLogic
             _loginScreen = loginScreen;
 
             _loginScreen.OnGoBackPress = GoBack;
-            _loginScreen.OnGoToSignUpPress = SignUp;
+            _loginScreen.OnSubmitButtonPress = SignUp;
         }
 
         public void GoBack()
@@ -40,11 +43,18 @@ namespace BusinessLogic
             {
                 _loginScreen.StartLoadingState();
 
-                var net = new NetworkService("", null);
+                var net = new NetworkService("http://192.168.0.152:5000/api", a => Debug.WriteLine(a.FirstOrDefault()));
 
-                await net.GetAsync<object>("", (a) =>
+                var signIn = new UserSignInDto
                 {
-                    var dashboardLogic = new DashboardLogic(_loginScreen.GoToDashboard());
+                    Email = _loginScreen.Username,
+                    Password = _loginScreen.Password
+                };
+
+                await net.PostAsync<string>("Account/sign_in", signIn, (a) =>
+                {
+                    Debug.WriteLine(a);
+                    _loginScreen.GoToDashboard();
 
                 });
 
