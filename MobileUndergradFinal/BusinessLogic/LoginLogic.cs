@@ -17,14 +17,28 @@ namespace BusinessLogic
 
             _loginScreen.OnGoBackPress = GoBack;
             _loginScreen.OnSubmitButtonPress = SignUp;
+            _loginScreen.OnPasswordTouch = RemoveError;
+            _loginScreen.OnUsernameTouch = RemoveError;
+            _loginScreen.OnGoToSignUpPress = GoToSignUp;
         }
 
-        public void GoBack()
+        private void GoToSignUp()
+        {
+            _loginScreen.GoToSignUp();
+        }
+
+        private void RemoveError()
+        {
+            _loginScreen.UsernameError = "";
+            _loginScreen.PasswordError = "";
+        }
+
+        private void GoBack()
         {
             _loginScreen.GoBack();
         }
 
-        public async Task SignUp()
+        private async Task SignUp()
         {
             var makeRequest = true;
             if (string.IsNullOrWhiteSpace(_loginScreen.Username))
@@ -51,7 +65,7 @@ namespace BusinessLogic
                     Password = _loginScreen.Password
                 };
 
-                await net.PostAsync<string>("Account/sign_in", signIn, (a) =>
+                await net.PostAsync<string>("Account/sign_in", signIn, a =>
                 {
                     Debug.WriteLine(a);
                     _loginScreen.GoToDashboard();
