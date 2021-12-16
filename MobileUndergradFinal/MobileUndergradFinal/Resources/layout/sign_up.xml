@@ -5,22 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/zero"
-        app:layout_constraintHeight_min="wrap"
-        android:background="?attr/colorPrimary"
-        android:gravity="center"
-        android:text="@string/sign_up_top"
-        android:textColor="?attr/colorOnPrimary"
-        android:textSize="@dimen/text_size_extra_large"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintHeight_percent="0.2"/>
+	<LinearLayout
+		android:id="@+id/textView"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/zero"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHeight_percent="0.2"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0"
+		android:orientation="vertical"
+		android:background="?attr/colorPrimary">
+
+		<ImageView
+			android:layout_marginTop="5dp"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:scaleType="fitCenter"
+			android:src="@drawable/water_fountain"
+			android:contentDescription="@string/app_logo" />
+
+		<TextView
+
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_weight="3"
+			android:autoSizeTextType="uniform"
+			android:gravity="center"
+			android:maxLines="1"
+			android:paddingHorizontal="30dp"
+			android:text="@string/sign_up_top"
+			android:textColor="?attr/colorOnPrimary"
+			android:layout_marginBottom="5dp"/>
+
+	</LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"

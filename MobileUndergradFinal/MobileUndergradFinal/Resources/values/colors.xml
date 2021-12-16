@@ -11,12 +11,10 @@
 	<color name="teal_700">#FF018786</color>
 	<color name="black">#FF000000</color>
 	<color name="white">#FFFFFFFF</color>
-	<color name="ic_license_foreground">#940044</color>
-	<color name="ic_license_background">#000945</color>
+	<color name="ic_water_fountain_background">@color/license_dark_blue</color>
 
 	<color name="license_blue">#4287f5</color>
 	<color name="license_blue_variant">#2d63ba</color>
-	<color name="license_green">#2d63ba</color>
-	<color name="license_purple">#691e78</color>
-	<color name="license_purple_variant">#4e2157</color>
+	<color name="license_dark_blue">#004075</color>
+	<color name="license_dark_blue_variant">#003050</color>
 </resources>

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Undergrad</string>
+    <string name="app_logo">Water fountain SVG</string>
 
 	<!--Sign in-->
 	<string name="sign_in_top">"Sign in to use the app"</string>
