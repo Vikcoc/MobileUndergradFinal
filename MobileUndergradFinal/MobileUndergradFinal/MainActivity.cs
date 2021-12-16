@@ -20,7 +20,7 @@ using MobileUndergradFinal.Fragments.NoAccount;
 
 namespace MobileUndergradFinal
 {
-    [Activity(Label = "@string/app_name", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait, WindowSoftInputMode = SoftInput.AdjustResize)]
+    [Activity(Label = "@string/app_name", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : AppCompatActivity
     {
         private FragmentSignIn _signIn;

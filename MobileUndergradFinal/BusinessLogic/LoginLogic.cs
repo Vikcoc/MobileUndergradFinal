@@ -57,7 +57,7 @@ namespace BusinessLogic
             {
                 _loginScreen.StartLoadingState();
 
-                var net = new NetworkService("http://192.168.0.152:5000/api", a => Debug.WriteLine(a.FirstOrDefault()));
+                var net = new NetworkService("http://192.168.0.152:5000/api", a => Debug.WriteLine(a.Aggregate((x, y) => x + '\n' + y)));
 
                 var signIn = new UserSignInDto
                 {
