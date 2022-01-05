@@ -17,4 +17,11 @@
 	<color name="license_blue_variant">#2d63ba</color>
 	<color name="license_dark_blue">#004075</color>
 	<color name="license_dark_blue_variant">#003050</color>
+	<color name="license_green">#0CDB40</color>
+	<color name="license_green_variant">#0BBC37</color>
+	<color name="license_teal">#038786</color>
+	<color name="license_teal_variant">#015756</color>
+	<color name="license_orange">#EA8E06</color>
+	<color name="license_purple">#691e78</color>
+	<color name="license_purple_variant">#4e2157</color>
 </resources>

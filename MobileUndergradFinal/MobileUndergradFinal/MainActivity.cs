@@ -62,7 +62,8 @@ namespace MobileUndergradFinal
 
         public void GoToDashboard()
         {
-            //throw new NotImplementedException();
+            var intent = new Intent(this, typeof(DashboardActivity));
+            StartActivity(intent);
         }
 
         public void GoBack()
