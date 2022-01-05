@@ -20,7 +20,7 @@
 		android:background="?attr/colorPrimary">
 
 		<ImageView
-			android:layout_marginTop="5dp"
+			android:layout_marginTop="@dimen/margin_small"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:layout_weight="1"
@@ -36,10 +36,10 @@
 			android:autoSizeTextType="uniform"
 			android:gravity="center"
 			android:maxLines="1"
-			android:paddingHorizontal="30dp"
+			android:paddingHorizontal="@dimen/padding_horizontal"
 			android:text="@string/sign_up_top"
 			android:textColor="?attr/colorOnPrimary"
-			android:layout_marginBottom="5dp"/>
+			android:layout_marginBottom="@dimen/margin_small"/>
 
 	</LinearLayout>
 
@@ -62,7 +62,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-			android:imeOptions="actionNext"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,14 +78,13 @@
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-        app:layout_constraintVertical_bias="0.051">
+        app:layout_constraintVertical_bias="0.05">
 
         <com.google.android.material.textfield.TextInputEditText
 	        android:id="@+id/textInputEditText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-	        android:imeOptions="actionNext"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,10 +107,10 @@
         android:text="@string/sign_up_sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/button"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.078"
+        app:layout_constraintVertical_bias="0.07"
         android:clickable="true"
         android:focusable="true"/>
 

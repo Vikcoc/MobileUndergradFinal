@@ -19,5 +19,12 @@
 
 	<!--Fountain info short-->
 	<string name="fountain_status">"Status of fountain"</string>
+	<string name="fountain_image">"Picture of fountain"</string>
 
+	<!--Dashboard-->
+	<string name="dashboard_welcome">"Welcome "</string>
+	<string name="dashboard_near">"Near you"</string>
+	<string name="dashboard_contributions">"Your contributions"</string>
+	<string name="dashboard_see_all">"See all"</string>
+	<string name="dashboard_profile_image">"Profile picture"</string>
 </resources>

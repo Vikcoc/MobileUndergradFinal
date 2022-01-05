@@ -16,5 +16,7 @@
         <!-- Customize your theme here. -->
         <item name="colorWarning">@color/license_orange</item>
         <item name="colorValid">@color/license_green_variant</item>
+
+        <item name="android:imeOptions">normal</item>
     </style>
 </resources>
