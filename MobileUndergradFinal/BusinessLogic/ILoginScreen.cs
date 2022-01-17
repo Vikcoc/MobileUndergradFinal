@@ -24,5 +24,10 @@ namespace BusinessLogic
 
         void StartLoadingState();
         void EndLoadingState();
+
+        string ErrorForUsername { get; }
+        string ErrorForUsernameEmpty { get; }
+        string ErrorForPassword { get; }
+        string ErrorForPasswordEmpty { get; }
     }
 }

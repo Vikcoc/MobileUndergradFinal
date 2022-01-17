@@ -10,6 +10,7 @@ using Android.Views.InputMethods;
 using Android.Widget;
 using AndroidX.AppCompat.Widget;
 using AndroidX.AppCompat.App;
+using AndroidX.Fragment.App;
 using AndroidX.Lifecycle;
 using BusinessLogic;
 using Google.Android.Material.FloatingActionButton;
@@ -20,7 +21,7 @@ using MobileUndergradFinal.Fragments.NoAccount;
 
 namespace MobileUndergradFinal
 {
-    [Activity(Label = "@string/app_name", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "@string/app_name", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait, NoHistory = true)]
     public class MainActivity : AppCompatActivity
     {
         private FragmentSignIn _signIn;

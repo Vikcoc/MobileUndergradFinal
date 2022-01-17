@@ -131,5 +131,10 @@ namespace MobileUndergradFinal.Fragments.NoAccount
             Snackbar.Make(_submitButton, "Stopped Loading", Snackbar.LengthShort)
                 .SetAction("Action", (View.IOnClickListener)null).Show();
         }
+
+        public string ErrorForUsername => Resources.GetString(Resource.String.sign_in_username_error);
+        public string ErrorForUsernameEmpty => Resources.GetString(Resource.String.sign_in_username_error_empty);
+        public string ErrorForPassword => Resources.GetString(Resource.String.sign_in_password_error);
+        public string ErrorForPasswordEmpty => Resources.GetString(Resource.String.sign_in_password_error_empty);
     }
 }

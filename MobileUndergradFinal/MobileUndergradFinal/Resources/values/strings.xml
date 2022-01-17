@@ -9,13 +9,19 @@
 	<string name="sign_in_password">"Password"</string>
 	<string name="sign_in_sign_in">"Sign in"</string>
 	<string name="sign_in_sign_up">"Or sign up if you don't have an account"</string>
+	<string name="sign_in_username_error_empty">"Please fill username"</string>
+	<string name="sign_in_username_error">"Username may be incorrect"</string>
+	<string name="sign_in_password_error_empty">"Please fill password"</string>
+	<string name="sign_in_password_error">"Password may be incorrect"</string>
 
 	<!--Sign up-->
 	<string name="sign_up_top">"Sign up if you don't have an account"</string>
-	<string name="sign_up_username">"Username"</string>
+	<string name="sign_up_username">"Email"</string>
+	<string name="sign_up_username_error">"Must match email pattern"</string>
 	<string name="sign_up_password">"Password"</string>
 	<string name="sign_up_sign_in">"Sign up"</string>
 	<string name="sign_up_sign_up">"Or sign in if you already have an account"</string>
+	<string name="sign_up_password_error">"Must have uppercase, lowercase, numbers and special characters"</string>
 
 	<!--Fountain info short-->
 	<string name="fountain_status">"Status of fountain"</string>

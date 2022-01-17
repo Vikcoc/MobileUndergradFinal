@@ -13,28 +13,26 @@ namespace Network
 {
     public class NetworkService : INetworkService
     {
-        private readonly Action<List<string>> _onError;
         private readonly string _address;
 
-        public NetworkService([NotNull] string address, Action<List<string>> onError)
+        public NetworkService([NotNull] string address)
         {
             _address = address;
-            _onError = onError;
         }
 
-        public async Task GetAsync<T>([NotNull] string path, Action<T> onSuccess) where T : class
+        public async Task GetAsync<T>([NotNull] string path, Action<T> onSuccess, Action<List<string>> onError) where T : class
         {
-            await MakeRequestAsync<T>(HttpMethod.Get, path, onSuccess);
+            await MakeRequestAsync(HttpMethod.Get, path, onSuccess, onError);
         }
 
-        public async Task PostAsync<T>([NotNull] string path, object body, Action<T> onSuccess) where T : class
+        public async Task PostAsync<T>([NotNull] string path, object body, Action<T> onSuccess, Action<List<string>> onError) where T : class
         {
-            await MakeRequestAsync<T>(HttpMethod.Post, path, onSuccess, body);
+            await MakeRequestAsync(HttpMethod.Post, path, onSuccess, onError, body);
         }
 
-        private async Task MakeRequestAsync<T>([NotNull] HttpMethod method, [NotNull] string path, Action<T> onSuccess, object body = null) where T : class
+        private async Task MakeRequestAsync<T>([NotNull] HttpMethod method, [NotNull] string path, Action<T> onSuccess, Action<List<string>> onError, object body = null) where T : class
         {
-            HttpResponseMessage response = null;
+            HttpResponseMessage response;
             try
             {
                 var client = new HttpClient();
@@ -68,7 +66,7 @@ namespace Network
             }
             catch (Exception e)
             {
-                _onError?.Invoke(new List<string>{e.Message});
+                onError?.Invoke(new List<string>{e.Message});
                 return;
             }
 
@@ -90,7 +88,7 @@ namespace Network
             else
             {
                 var res = await response.Content.ReadAsStringAsync();
-                _onError?.Invoke(JsonConvert.DeserializeObject<List<string>>(res));
+                onError?.Invoke(JsonConvert.DeserializeObject<List<string>>(res));
             }
         }
     }
