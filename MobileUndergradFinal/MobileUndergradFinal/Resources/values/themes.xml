@@ -25,7 +25,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Layouts.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Layouts.Splash" parent="Theme.Layouts.NoActionBar">
+		<item name="android:background">@drawable/the_splash</item>
+    </style>
 
-    <style name="Theme.Layouts.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

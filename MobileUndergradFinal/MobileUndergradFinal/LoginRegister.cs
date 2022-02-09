@@ -1,28 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Views.InputMethods;
-using Android.Widget;
-using AndroidX.AppCompat.Widget;
 using AndroidX.AppCompat.App;
-using AndroidX.Fragment.App;
 using AndroidX.Lifecycle;
-using BusinessLogic;
-using Google.Android.Material.FloatingActionButton;
-using Google.Android.Material.Snackbar;
-using Google.Android.Material.TextField;
 using MobileUndergradFinal.Fragments;
 using MobileUndergradFinal.Fragments.NoAccount;
 
 namespace MobileUndergradFinal
 {
-    [Activity(Label = "@string/app_name", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait, NoHistory = true)]
-    public class MainActivity : AppCompatActivity
+    [Activity(Label = "LoginRegister", ScreenOrientation = ScreenOrientation.Portrait, NoHistory = true)]
+    public class LoginRegister : AppCompatActivity
     {
         private FragmentSignIn _signIn;
         private FragmentSignUp _signUp;

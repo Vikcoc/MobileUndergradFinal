@@ -1,19 +1,13 @@
-﻿using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
-using Android.Widget;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Android.Views.InputMethods;
-using BusinessLogic;
+using Android.Widget;
+using BusinessLogic.LoginRegister;
 using Google.Android.Material.Snackbar;
 using Google.Android.Material.TextField;
-using Fragment = AndroidX.Fragment.App.Fragment;
+using System;
+using System.Threading.Tasks;
 
 namespace MobileUndergradFinal.Fragments.NoAccount
 {
@@ -106,17 +100,17 @@ namespace MobileUndergradFinal.Fragments.NoAccount
 
         public void GoToSignUp()
         {
-            ((MainActivity)Activity).GoToSignUp();
+            ((LoginRegister)Activity).GoToSignUp();
         }
 
         public void GoToDashboard()
         {
-            ((MainActivity)Activity).GoToDashboard();
+            ((LoginRegister)Activity).GoToDashboard();
         }
 
         public void GoBack()
         {
-            ((MainActivity) Activity).GoBack();
+            ((LoginRegister) Activity).GoBack();
         }
 
 
@@ -136,5 +130,14 @@ namespace MobileUndergradFinal.Fragments.NoAccount
         public string ErrorForUsernameEmpty => Resources.GetString(Resource.String.sign_in_username_error_empty);
         public string ErrorForPassword => Resources.GetString(Resource.String.sign_in_password_error);
         public string ErrorForPasswordEmpty => Resources.GetString(Resource.String.sign_in_password_error_empty);
+
+        public string AccessToken
+        {
+            set
+            {
+                var preferences = Context.GetSharedPreferences(Resources.GetString(Resource.String.auth), FileCreationMode.Private);
+                preferences.Edit().PutString(Resources.GetString(Resource.String.access_token), value).Apply();
+            }
+        }
     }
 }

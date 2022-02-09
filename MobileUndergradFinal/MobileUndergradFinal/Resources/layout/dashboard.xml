@@ -1,61 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/view"
+	<com.google.android.material.appbar.AppBarLayout
+		android:id="@+id/appBar"
+		android:layout_width="match_parent"
+		android:layout_height="100dp"
+		android:fitsSystemWindows="true">
+
+		<MobileUndergradFinal.CustomLayouts.CollapsibleToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+		                                                       xmlns:app="http://schemas.android.com/apk/res-auto"
+		                                                       android:id="@+id/motionLayout"
+		                                                       app:layoutDescription="@xml/dashboard_scene"
+		                                                       android:layout_width="match_parent"
+		                                                       android:layout_height="match_parent"
+		                                                       android:minHeight="50dp"
+		                                                       android:fitsSystemWindows="false"
+		                                                       app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
+
+			<androidx.appcompat.widget.AppCompatTextView
+				android:id="@+id/textView3"
+				android:layout_width="@dimen/zero"
+				android:layout_height="@dimen/zero"
+				android:layout_marginStart="@dimen/padding_horizontal"
+				android:gravity="center_vertical"
+				android:text="@string/dashboard_welcome"
+				android:textColor="?attr/colorOnPrimary"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintHorizontal_bias="0.0"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent"
+				app:layout_constraintWidth_percent="0.5"
+				app:layout_constraintHeight_percent="0.7"
+				android:autoSizeTextType="uniform"/>
+
+			<com.google.android.material.imageview.ShapeableImageView
+				android:id="@+id/imageView"
+				android:layout_width="@dimen/zero"
+				android:layout_height="@dimen/zero"
+				android:layout_marginEnd="@dimen/padding_horizontal"
+				android:scaleType="centerCrop"
+				android:src="@drawable/water_fountain"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintDimensionRatio="W,1:1"
+				app:layout_constraintWidth_percent="0.2"
+				app:layout_constraintHeight_percent="0.7"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintHorizontal_bias="1.0"
+				app:layout_constraintStart_toEndOf="@+id/textView3"
+				app:layout_constraintTop_toTopOf="parent"
+				app:shapeAppearance="@style/ImageRound"
+				android:contentDescription="@string/dashboard_profile_image"/>
+			
+		</MobileUndergradFinal.CustomLayouts.CollapsibleToolbar>
+
+	</com.google.android.material.appbar.AppBarLayout>
+
+	<androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/zero"
-        android:background="?attr/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textView3"
-        android:layout_width="@dimen/zero"
-        android:layout_height="@dimen/zero"
-        android:layout_marginStart="@dimen/padding_horizontal"
-        android:gravity="center_vertical"
-        android:text="@string/dashboard_welcome"
-        android:textColor="?attr/colorOnPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintWidth_percent="0.5"
-        app:layout_constraintHeight_percent="0.05"
-        android:autoSizeTextType="uniform"/>
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView"
-        android:layout_width="@dimen/zero"
-        android:layout_height="@dimen/zero"
-        android:layout_marginEnd="@dimen/padding_horizontal"
-        android:scaleType="centerCrop"
-        android:src="@drawable/water_fountain"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintDimensionRatio="W,1:1"
-        app:layout_constraintWidth_percent="0.2"
-        app:layout_constraintHeight_percent="0.07"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintVertical_bias="0.5"
-        app:shapeAppearance="@style/ImageRound"
-        android:contentDescription="@string/dashboard_profile_image"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/zero"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view"
-        android:fillViewport="true">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,21 +99,18 @@
                     android:textSize="@dimen/text_size_large"
                     android:textColor="?attr/colorOnPrimary"/>
 
-                <include layout="@layout/contribution_short_layout"
-                    android:layout_marginVertical="@dimen/margin_small"
+                <androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/nearYou"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent" />
-                <include layout="@layout/contribution_short_layout"
-                    android:layout_marginVertical="@dimen/margin_small"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:overScrollMode="never"/>
 
                 <Button
-                    android:layout_marginVertical="@dimen/margin_small"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="@string/dashboard_see_all"
-                    android:backgroundTint="?attr/colorPrimaryVariant"/>
+	                android:layout_marginVertical="@dimen/margin_small"
+	                android:layout_height="wrap_content"
+	                android:layout_width="wrap_content"
+	                android:text="@string/dashboard_see_all"
+	                android:backgroundTint="?attr/colorPrimaryVariant"/>
 
             </LinearLayout>
 
@@ -126,14 +132,12 @@
                     android:textSize="@dimen/text_size_large"
                     android:textColor="?attr/colorOnPrimary"/>
 
-                <include layout="@layout/contribution_short_layout"
-                    android:layout_marginVertical="@dimen/margin_small"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent" />
-                <include layout="@layout/contribution_short_layout"
-                    android:layout_marginVertical="@dimen/margin_small"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                <androidx.recyclerview.widget.RecyclerView
+	                android:id="@+id/yourContributions"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:overScrollMode="never"/>
+
 
                 <Button
                     android:layout_marginVertical="@dimen/margin_small"
@@ -145,5 +149,6 @@
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

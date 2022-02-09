@@ -1,12 +1,11 @@
-﻿using Android.App;
-using Android.Content;
+﻿using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
 using System;
 using System.Threading.Tasks;
 using Android.Views.InputMethods;
-using BusinessLogic;
+using BusinessLogic.LoginRegister;
 using Google.Android.Material.Snackbar;
 using Google.Android.Material.TextField;
 
@@ -99,12 +98,12 @@ namespace MobileUndergradFinal.Fragments.NoAccount
         public Action OnGoBackPress { get; set; }
         public void GoToDashboard()
         {
-            ((MainActivity)Activity).GoToDashboard();
+            ((LoginRegister)Activity).GoToDashboard();
         }
 
         public void GoBack()
         {
-            ((MainActivity)Activity).GoToSignIn();
+            ((LoginRegister)Activity).GoToSignIn();
         }
 
         public void StartLoadingState()

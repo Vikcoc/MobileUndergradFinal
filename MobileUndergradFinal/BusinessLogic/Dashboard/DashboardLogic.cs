@@ -1,4 +1,4 @@
-﻿namespace BusinessLogic
+﻿namespace BusinessLogic.Dashboard
 {
     public class DashboardLogic
     {

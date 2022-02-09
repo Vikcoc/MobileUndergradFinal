@@ -1,11 +1,10 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Communication.AccountDto;
 using Network;
 
-namespace BusinessLogic
+namespace BusinessLogic.LoginRegister
 {
     public class LoginLogic
     {
@@ -68,7 +67,7 @@ namespace BusinessLogic
 
                 await _networkService.PostAsync<string>(RequestPaths.SignIn, signIn, a =>
                 {
-                    Debug.WriteLine(a);
+                    _loginScreen.AccessToken = a;
                     _loginScreen.GoToDashboard();
 
                 }, a =>

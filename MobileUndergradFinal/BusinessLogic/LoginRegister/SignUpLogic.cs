@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Communication.AccountDto;
 using Network;
 
-namespace BusinessLogic
+namespace BusinessLogic.LoginRegister
 {
     public class SignUpLogic
     {

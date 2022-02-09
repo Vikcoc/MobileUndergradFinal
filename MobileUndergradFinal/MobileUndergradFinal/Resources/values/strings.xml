@@ -3,6 +3,10 @@
     <string name="app_logo">Water fountain SVG</string>
     <string name="placeholder">Placeholder</string>
 
+
+    <string name="auth">Auth</string>
+    <string name="access_token">AccessToken</string>
+
 	<!--Sign in-->
 	<string name="sign_in_top">"Sign in to use the app"</string>
 	<string name="sign_in_username">"Username"</string>
