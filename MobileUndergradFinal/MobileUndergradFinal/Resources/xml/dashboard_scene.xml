@@ -5,14 +5,15 @@
     <Transition
 	    app:constraintSetEnd="@+id/end"
 	    app:constraintSetStart="@+id/start"
-	    app:duration="1000"
+	    app:duration="500"
 	    app:motionInterpolator="linear">
         <OnSwipe
 	        app:dragDirection="dragUp"
 	        app:touchAnchorSide="bottom" />
 
     </Transition>
-    <ConstraintSet android:id="@+id/end">
+
+	<ConstraintSet android:id="@+id/end">
         <Constraint
 	        android:id="@+id/textView3"
 	        android:layout_width="@dimen/zero"

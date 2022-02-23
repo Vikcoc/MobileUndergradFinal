@@ -61,7 +61,9 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\FountainsTypeAdapter.cs" />
     <Compile Include="Adapters\FountainsAdapter.cs" />
+    <Compile Include="AddNewFountainActivity.cs" />
     <Compile Include="CustomLayouts\CollapsibleToolbar.cs" />
     <Compile Include="DashboardActivity.cs" />
     <Compile Include="Fragments\NoAccount\FragmentSignIn.cs" />
@@ -165,6 +167,17 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\the_splash.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\add_new_fountain.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\xml\add_new_fountain_scene.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

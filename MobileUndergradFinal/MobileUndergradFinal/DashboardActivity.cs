@@ -1,6 +1,7 @@
 ﻿using Android.App;
-using Android.OS;
 using Android.Content.PM;
+using Android.OS;
+using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.RecyclerView.Widget;
 using MobileUndergradFinal.Adapters;
@@ -26,6 +27,12 @@ namespace MobileUndergradFinal
             yourContributions.SetLayoutManager(new LinearLayoutManager(this));
             yourContributions.SetAdapter(new FountainsAdapter());
             yourContributions.AddItemDecoration(new FountainsDecorator(Resources.GetDimensionPixelOffset(Resource.Dimension.margin_small)));
+
+            var addNew = FindViewById<Button>(Resource.Id.addNew);
+            addNew.Click += (sender, args) =>
+            {
+                StartActivity(typeof(AddNewFountainActivity));
+            };
         }
     }
 }
