@@ -6,6 +6,8 @@
         public DashboardLogic(IDashboardScreen dashboardScreen)
         {
             _dashboardScreen = dashboardScreen;
+            _dashboardScreen.OnAddNewFountainPress = _dashboardScreen.MoveToAddNewFountain;
+            _dashboardScreen.OnSignOutPress = _dashboardScreen.SignOutAndMoveToLogin;
         }
     }
 }

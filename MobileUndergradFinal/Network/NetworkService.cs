@@ -13,6 +13,8 @@ namespace Network
 {
     public class NetworkService : INetworkService
     {
+        public string BearerToken { get; set; }
+
         private readonly string _address;
 
         public NetworkService([NotNull] string address)
@@ -37,6 +39,8 @@ namespace Network
             {
                 var client = new HttpClient();
                 var request = new HttpRequestMessage(method, _address + "/" + path);
+                if(!string.IsNullOrWhiteSpace(BearerToken))
+                    request.Headers.Add("Authorization", "Bearer " + BearerToken);
                 Debug.WriteLine(_address + "/" + path);
                 switch (body)
                 {
@@ -87,8 +91,28 @@ namespace Network
             }
             else
             {
-                var res = await response.Content.ReadAsStringAsync();
-                onError?.Invoke(JsonConvert.DeserializeObject<List<string>>(res));
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.Unauthorized:
+                        onError?.Invoke(new List<string>{"401 Unauthorized"});
+                        break;
+                    case HttpStatusCode.InternalServerError:
+                        onError?.Invoke(new List<string> { "500 Internal server error" });
+                        break;
+                    case HttpStatusCode.BadRequest:
+                    {
+                        var res = await response.Content.ReadAsStringAsync();
+                        onError?.Invoke(JsonConvert.DeserializeObject<List<string>>(res));
+                        break;
+                    }
+                    default:
+                    {
+                        var res = await response.Content.ReadAsStringAsync();
+                        onError?.Invoke(new List<string>{res});
+                        break;
+                    }
+
+                }
             }
         }
     }

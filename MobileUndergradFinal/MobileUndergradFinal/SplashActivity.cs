@@ -22,6 +22,7 @@ namespace MobileUndergradFinal
         protected override void OnResume()
         {
             base.OnResume();
+            //StartActivity(typeof(MyMapsActivity));
             var startup = new Task(SimulateStartup);
             startup.Start();
         }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/gradient_secondary">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="@dimen/image_size"
+        android:layout_height="@dimen/zero"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:background="?attr/colorSurface"
+        android:contentDescription="@string/fountain_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/water_fountain_valid"
+        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/placeholder"
+        android:textColor="?attr/colorOnPrimary"
+        android:textSize="@dimen/text_size_medium_large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="@dimen/zero"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/placeholder"
+        android:textColor="?attr/colorOnPrimary"
+        android:textSize="@dimen/text_size_medium_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

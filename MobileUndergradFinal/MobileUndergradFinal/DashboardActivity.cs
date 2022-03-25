@@ -1,17 +1,27 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.RecyclerView.Widget;
+using BusinessLogic.Dashboard;
 using MobileUndergradFinal.Adapters;
 using MobileUndergradFinal.ItemDecorators;
 
 namespace MobileUndergradFinal
 {
     [Activity(Label = "DashboardActivity", ScreenOrientation = ScreenOrientation.Portrait)]
-    public class DashboardActivity : AppCompatActivity
+    public class DashboardActivity : AppCompatActivity, IDashboardScreen
     {
+
+        private readonly DashboardLogic _dashboard;
+        public DashboardActivity()
+        {
+            _dashboard = new DashboardLogic(this);
+        }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -29,10 +39,28 @@ namespace MobileUndergradFinal
             yourContributions.AddItemDecoration(new FountainsDecorator(Resources.GetDimensionPixelOffset(Resource.Dimension.margin_small)));
 
             var addNew = FindViewById<Button>(Resource.Id.addNew);
-            addNew.Click += (sender, args) =>
-            {
-                StartActivity(typeof(AddNewFountainActivity));
-            };
+            addNew.Click += (sender, args) => OnAddNewFountainPress?.Invoke();
+
+            var view = FindViewById(Resource.Id.signOut);
+            view.Click += (sender, args) => OnSignOutPress?.Invoke();
         }
+
+        public void SignOutAndMoveToLogin()
+        {
+            var preferences = this.GetSharedPreferences(Resources.GetString(Resource.String.auth),
+                FileCreationMode.Private);
+            preferences.Edit().PutString(Resources.GetString(Resource.String.access_token), "").Apply();
+            var intent = new Intent(this, typeof(LoginRegister));
+            intent.AddFlags(ActivityFlags.ClearTask | ActivityFlags.NewTask);
+            StartActivity(intent);
+        }
+
+        public void MoveToAddNewFountain()
+        {
+            StartActivity(typeof(AddNewFountainActivity));
+        }
+
+        public Action OnSignOutPress { get; set; }
+        public Action OnAddNewFountainPress { get; set; }
     }
 }

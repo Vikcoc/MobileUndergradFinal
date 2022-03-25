@@ -8,5 +8,6 @@ namespace Network
     {
         public const string SignIn = "Account/sign_in";
         public const string SignUp = "Account/sign_up";
+        public const string WaterSourceVariant = "WaterSourceVariant";
     }
 }
