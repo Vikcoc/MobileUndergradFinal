@@ -28,3 +28,5 @@ tests/api-compatibility/reference/*.cs
 Novell
 *.patch
 *.keystore
+/MobileUndergradFinal/Network/settings.json
+/MobileUndergradFinal/Network/Settings/settings-debug.json

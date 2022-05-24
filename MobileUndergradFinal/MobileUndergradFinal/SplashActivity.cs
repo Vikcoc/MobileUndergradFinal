@@ -1,12 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.Content.PM;
-using Android.OS;
 using AndroidX.AppCompat.App;
-using BusinessLogic;
 using BusinessLogic.Startup;
+using System;
+using System.Threading.Tasks;
 
 namespace MobileUndergradFinal
 {
@@ -22,6 +20,7 @@ namespace MobileUndergradFinal
         protected override void OnResume()
         {
             base.OnResume();
+            //System.Diagnostics.Debug.WriteLine(Network.EnvironmentSettings.Instance.Information.BackendAddress);
             //StartActivity(typeof(MyMapsActivity));
             var startup = new Task(SimulateStartup);
             startup.Start();

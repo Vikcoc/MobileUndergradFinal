@@ -126,6 +126,10 @@
       <Project>{19835a1a-9626-4295-82f7-1be083f2b03d}</Project>
       <Name>Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Network\Network.csproj">
+      <Project>{bd510b8c-a77e-4b3f-a09c-f6368a57f233}</Project>
+      <Name>Network</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\sign_up.xml">

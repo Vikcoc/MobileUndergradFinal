@@ -8,4 +8,12 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Settings\" />
+  </ItemGroup>
+
+  <Target Name="CopyFiles" BeforeTargets="PrepareForBuild">
+    <Copy SourceFiles="$(ProjectDir)\Settings\settings-$(Configuration).json" DestinationFiles="$(ProjectDir)\settings.json" />
+  </Target>
+
 </Project>
