@@ -24,13 +24,12 @@ namespace MobileUndergradFinal.Fragments.NoAccount
         private SignUpLogic _signUp;
         public FragmentSignUp() : base(Resource.Layout.sign_up)
         {
+            _signUp = new SignUpLogic(this);
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
-
-            _signUp = new SignUpLogic(this, Resources.GetString(Resource.String.url));
 
             _username = view.FindViewById<TextInputEditText>(Resource.Id.textInputEditText1);
             _password = view.FindViewById<TextInputEditText>(Resource.Id.textInputEditText2);

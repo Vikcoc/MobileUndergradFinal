@@ -14,10 +14,10 @@ namespace BusinessLogic.Dashboard
         private readonly IAddNewFountainScreen _addNewFountainScreen;
         private readonly NetworkService _networkService;
 
-        public AddNewFountainLogic(IAddNewFountainScreen addNewFountainScreen, string backendUrl)
+        public AddNewFountainLogic(IAddNewFountainScreen addNewFountainScreen)
         {
             _addNewFountainScreen = addNewFountainScreen;
-            _networkService = new NetworkService(backendUrl);
+            _networkService = new NetworkService();
 
             _addNewFountainScreen.OnScreenVisible = OnScreenVisible;
         }

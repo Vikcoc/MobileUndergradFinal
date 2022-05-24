@@ -30,3 +30,4 @@ Novell
 *.keystore
 /MobileUndergradFinal/Network/settings.json
 /MobileUndergradFinal/Network/Settings/settings-debug.json
+/MobileUndergradFinal/MobileUndergradFinal/Properties/AndroidManifestDebug.xml

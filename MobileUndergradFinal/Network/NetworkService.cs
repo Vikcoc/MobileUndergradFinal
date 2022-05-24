@@ -17,9 +17,9 @@ namespace Network
 
         private readonly string _address;
 
-        public NetworkService([NotNull] string address)
+        public NetworkService()
         {
-            _address = address;
+            _address = EnvironmentSettings.Instance.Information.BackendAddress;
         }
 
         public async Task GetAsync<T>([NotNull] string path, Action<T> onSuccess, Action<List<string>> onError) where T : class

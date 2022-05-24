@@ -28,7 +28,9 @@ namespace Network
 
         private static EnvironmentInformation ReadInformation()
         {
-            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("MobileUndergradFinal.settings.json");
+            var x = Assembly.GetExecutingAssembly();
+            var a = x.GetManifestResourceNames();
+            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Network.settings.json");
             var jsonFile = new StreamReader(stream).ReadToEnd();
             return JsonConvert.DeserializeObject<EnvironmentInformation>(jsonFile);
         }

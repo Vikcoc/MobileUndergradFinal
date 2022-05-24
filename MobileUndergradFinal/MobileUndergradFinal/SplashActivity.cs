@@ -20,8 +20,6 @@ namespace MobileUndergradFinal
         protected override void OnResume()
         {
             base.OnResume();
-            //System.Diagnostics.Debug.WriteLine(Network.EnvironmentSettings.Instance.Information.BackendAddress);
-            //StartActivity(typeof(MyMapsActivity));
             var startup = new Task(SimulateStartup);
             startup.Start();
         }

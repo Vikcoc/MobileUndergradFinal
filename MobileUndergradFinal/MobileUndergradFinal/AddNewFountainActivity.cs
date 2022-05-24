@@ -29,13 +29,16 @@ namespace MobileUndergradFinal
 
         private AddNewFountainLogic _logic;
 
+        public AddNewFountainActivity()
+        {
+            _logic = new AddNewFountainLogic(this);
+        }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.add_new_fountain);
-
-            _logic = new AddNewFountainLogic(this, Resources.GetString(Resource.String.url));
 
             _fountainsTypeAdapter = new FountainsTypeAdapter(selectedView =>
             {

@@ -25,13 +25,12 @@ namespace MobileUndergradFinal.Fragments.NoAccount
 
         public FragmentSignIn() : base(Resource.Layout.sign_in)
         {
+            _loginLogic = new LoginLogic(this);
         }
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
-
-            _loginLogic = new LoginLogic(this, Resources.GetString(Resource.String.url));
 
             _username = view.FindViewById<TextInputEditText>(Resource.Id.textInputEditText1);
             _password = view.FindViewById<TextInputEditText>(Resource.Id.textInputEditText2);

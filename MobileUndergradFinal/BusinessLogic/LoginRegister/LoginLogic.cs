@@ -11,7 +11,7 @@ namespace BusinessLogic.LoginRegister
         private readonly ILoginScreen _loginScreen;
         private readonly NetworkService _networkService;
 
-        public LoginLogic(ILoginScreen loginScreen, string backendUrl)
+        public LoginLogic(ILoginScreen loginScreen)
         {
             _loginScreen = loginScreen;
 
@@ -21,7 +21,7 @@ namespace BusinessLogic.LoginRegister
             _loginScreen.OnUsernameTouch = RemoveError;
             _loginScreen.OnGoToSignUpPress = GoToSignUp;
 
-            _networkService = new NetworkService(backendUrl);
+            _networkService = new NetworkService();
         }
 
         private void GoToSignUp()

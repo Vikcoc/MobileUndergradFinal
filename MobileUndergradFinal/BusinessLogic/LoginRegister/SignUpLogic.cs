@@ -12,12 +12,12 @@ namespace BusinessLogic.LoginRegister
         private readonly ISignUpScreen _signUpScreen;
         private readonly NetworkService _networkService;
 
-        public SignUpLogic(ISignUpScreen signUpScreen, string backendUrl)
+        public SignUpLogic(ISignUpScreen signUpScreen)
         {
             _signUpScreen = signUpScreen;
 
 
-            _networkService = new NetworkService(backendUrl);
+            _networkService = new NetworkService();
             _signUpScreen.OnSubmitButtonPress += SignUp;
             _signUpScreen.OnGoToSignInPress += GoBack;
             _signUpScreen.OnGoBackPress += GoBack;
