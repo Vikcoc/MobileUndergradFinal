@@ -63,23 +63,24 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\TokenAndErrorActivity.cs" />
     <Compile Include="AdapterDto\WaterSourceVariant.cs" />
     <Compile Include="Adapters\FountainsTypeAdapter.cs" />
     <Compile Include="Adapters\FountainsAdapter.cs" />
-    <Compile Include="AddNewFountainActivity.cs" />
+    <Compile Include="Activities\AddNewFountainActivity.cs" />
     <Compile Include="CustomLayouts\CollapsibleToolbar.cs" />
-    <Compile Include="DashboardActivity.cs" />
+    <Compile Include="Activities\DashboardActivity.cs" />
     <Compile Include="Fragments\NoAccount\FragmentSignIn.cs" />
     <Compile Include="Fragments\NoAccount\FragmentSignUp.cs" />
     <Compile Include="Fragments\SwappableFragment.cs" />
     <Compile Include="Helper\CustomViewHolder.cs" />
     <Compile Include="ItemDecorators\FountainTypesDecorator.cs" />
     <Compile Include="ItemDecorators\FountainsDecorator.cs" />
-    <Compile Include="LoginRegister.cs" />
-    <Compile Include="MyMapsActivity.cs" />
+    <Compile Include="Activities\LoginRegisterActivity.cs" />
+    <Compile Include="Activities\MyMapsActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SplashActivity.cs" />
+    <Compile Include="Activities\SplashActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

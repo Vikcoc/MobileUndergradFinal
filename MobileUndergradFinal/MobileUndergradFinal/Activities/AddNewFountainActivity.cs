@@ -1,6 +1,13 @@
-﻿using Android.App;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Android.Views;
+using Android.Widget;
 using AndroidX.AppCompat.App;
 using AndroidX.ConstraintLayout.Motion.Widget;
 using AndroidX.RecyclerView.Widget;
@@ -9,21 +16,13 @@ using Communication.SourceVariantDto;
 using MobileUndergradFinal.AdapterDto;
 using MobileUndergradFinal.Adapters;
 using MobileUndergradFinal.ItemDecorators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Android.Content;
-using Android.Views;
-using Android.Widget;
 
-namespace MobileUndergradFinal
+namespace MobileUndergradFinal.Activities
 {
     [Activity(Label = "DashboardActivity", ScreenOrientation = ScreenOrientation.Portrait)]
-    public class AddNewFountainActivity : AppCompatActivity, IAddNewFountainScreen
+    public class AddNewFountainActivity : TokenAndErrorActivity, IAddNewFountainScreen
     {
         private MotionLayout _selectorLayout;
-        private Guid? _selectedViewId;
         private FountainsTypeAdapter _fountainsTypeAdapter;
         private View _selectedView;
 
@@ -42,7 +41,7 @@ namespace MobileUndergradFinal
 
             _fountainsTypeAdapter = new FountainsTypeAdapter(selectedView =>
             {
-                _selectedViewId = selectedView.Id;
+                SelectedVariant = selectedView.Id;
                 var topText = _selectedView.FindViewById<TextView>(Resource.Id.textView4);
                 topText.Text = selectedView.Name;
                 var bottomText = _selectedView.FindViewById<TextView>(Resource.Id.textView5);
@@ -62,11 +61,16 @@ namespace MobileUndergradFinal
             _selectedView = FindViewById(Resource.Id.selected);
             _selectedView.Click += (sender, args) =>
             {
-                _selectedViewId = null;
+                SelectedVariant = null;
                 _selectorLayout.TransitionToStart();
             };
+            
+            OnCreated();
+        }
 
-            OnScreenVisible?.Invoke();
+        private async void OnCreated()
+        {
+            await OnScreenVisible();
         }
 
         public Func<Task> OnScreenVisible { get; set; }
@@ -80,15 +84,6 @@ namespace MobileUndergradFinal
             }).ToList());
         }
 
-        public Guid? SelectedVariant => _selectedViewId;
-
-        public string AccessToken
-        {
-            get
-            {
-                var preferences = this.GetSharedPreferences(Resources.GetString(Resource.String.auth), FileCreationMode.Private);
-                return preferences.GetString(GetString(Resource.String.access_token), "");
-            }
-        }
+        public Guid? SelectedVariant { get; private set; }
     }
 }

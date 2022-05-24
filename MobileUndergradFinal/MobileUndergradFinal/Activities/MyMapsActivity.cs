@@ -1,4 +1,6 @@
-﻿using Android.App;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Android.App;
 using Android.Content.PM;
 using Android.Gms.Location;
 using Android.Gms.Maps;
@@ -7,13 +9,11 @@ using Android.Locations;
 using Android.OS;
 using Android.Widget;
 using AndroidX.AppCompat.App;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace MobileUndergradFinal
+namespace MobileUndergradFinal.Activities
 {
     [Activity(Label = "MyMapsActivity", ScreenOrientation = ScreenOrientation.Portrait)]
-    public class MyMapsActivity : AppCompatActivity, IOnMapReadyCallback
+    public class MyMapsActivity : TokenAndErrorActivity, IOnMapReadyCallback
     {
         private GoogleMap _map;
         protected override void OnCreate(Bundle savedInstanceState)

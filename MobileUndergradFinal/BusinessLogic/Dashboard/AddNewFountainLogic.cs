@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Communication.SourceVariantDto;
 using Network;
+using Network.Response;
 
 namespace BusinessLogic.Dashboard
 {
@@ -25,11 +26,24 @@ namespace BusinessLogic.Dashboard
         private async Task OnScreenVisible()
         {
             _networkService.BearerToken = _addNewFountainScreen.AccessToken;
-            await _networkService.GetAsync<List<WaterSourceVariantDto>>(RequestPaths.WaterSourceVariant,
-                x => 
-                    _addNewFountainScreen.SetWaterSourceVariants(x),
-                x => 
-                    Debug.WriteLine(x.Aggregate((a, b) => a + b)));
+            var res = await _networkService.GetAsync<List<WaterSourceVariantDto>>(RequestPaths.WaterSourceVariant);
+
+            switch (res.ErrorType)
+            {
+                case ErrorType.None:
+                {
+                    _addNewFountainScreen.SetWaterSourceVariants(res.Data);
+                    break;
+                }
+                case ErrorType.Actionable:
+                    _addNewFountainScreen.DisplayError(res.Error);
+                    break;
+                case ErrorType.NonActionable:
+                    _addNewFountainScreen.DisplayError(res.Error);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

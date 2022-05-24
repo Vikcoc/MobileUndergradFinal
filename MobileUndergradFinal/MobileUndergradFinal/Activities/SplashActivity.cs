@@ -1,15 +1,15 @@
-﻿using Android.App;
+﻿using System;
+using System.Threading.Tasks;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using AndroidX.AppCompat.App;
 using BusinessLogic.Startup;
-using System;
-using System.Threading.Tasks;
 
-namespace MobileUndergradFinal
+namespace MobileUndergradFinal.Activities
 {
     [Activity(Label = "@string/app_name", Theme = "@style/Theme.Layouts.Splash", MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait, NoHistory = true)]
-    public class SplashActivity : AppCompatActivity, ISplashScreen
+    public class SplashActivity : TokenAndErrorActivity, ISplashScreen
     {
         private readonly StartupLogic _logic;
         public SplashActivity()
@@ -29,15 +29,6 @@ namespace MobileUndergradFinal
             AfterInitialization?.Invoke();
         }
 
-        public string AccessToken
-        {
-            get
-            {
-                var preferences = this.GetSharedPreferences(Resources.GetString(Resource.String.auth), FileCreationMode.Private);
-                return preferences.GetString(Resources.GetString(Resource.String.access_token), null);
-            }
-        }
-
         public void MoveToDashboard()
         {
             StartActivity(new Intent(this, typeof(DashboardActivity)));
@@ -45,7 +36,7 @@ namespace MobileUndergradFinal
 
         public void MoveToLogin()
         {
-            StartActivity(new Intent(this, typeof(LoginRegister)));
+            StartActivity(new Intent(this, typeof(LoginRegisterActivity)));
         }
 
         public Action AfterInitialization { get; set; }

@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Network
+namespace Network.Environment
 {
     public sealed class EnvironmentSettings
     {

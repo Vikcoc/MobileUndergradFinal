@@ -7,10 +7,10 @@ using AndroidX.Lifecycle;
 using MobileUndergradFinal.Fragments;
 using MobileUndergradFinal.Fragments.NoAccount;
 
-namespace MobileUndergradFinal
+namespace MobileUndergradFinal.Activities
 {
-    [Activity(Label = "LoginRegister", ScreenOrientation = ScreenOrientation.Portrait, NoHistory = true)]
-    public class LoginRegister : AppCompatActivity
+    [Activity(Label = "LoginRegisterActivity", ScreenOrientation = ScreenOrientation.Portrait, NoHistory = true)]
+    public class LoginRegisterActivity : TokenAndErrorActivity
     {
         private FragmentSignIn _signIn;
         private FragmentSignUp _signUp;

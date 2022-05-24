@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.LoginRegister
 {
-    public interface ISignUpScreen
+    public interface ISignUpScreen : IErrorScreen
     {
         string Username { get; }
         string UsernameError { get; set; }
@@ -23,5 +23,6 @@ namespace BusinessLogic.LoginRegister
 
         string ErrorForUsername { get; }
         string ErrorForPassword { get; }
+        string AccessToken { set; }
     }
 }

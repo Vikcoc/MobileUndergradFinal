@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Network
+namespace Network.Environment
 {
     public class EnvironmentInformation
     {

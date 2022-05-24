@@ -1,8 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Communication.AccountDto;
 using Network;
+using Network.Response;
 
 namespace BusinessLogic.LoginRegister
 {
@@ -65,19 +67,30 @@ namespace BusinessLogic.LoginRegister
                     Password = _loginScreen.Password
                 };
 
-                await _networkService.PostAsync<string>(RequestPaths.SignIn, signIn, a =>
-                {
-                    _loginScreen.AccessToken = a;
-                    _loginScreen.GoToDashboard();
-
-                }, a =>
-                {
-                    Debug.WriteLine(a.Aggregate((x, y) => x + '\n' + y));
-                    _loginScreen.UsernameError = _loginScreen.ErrorForUsername;
-                    _loginScreen.PasswordError = _loginScreen.ErrorForPassword;
-                });
+                var res = await _networkService.PostAsync<string>(RequestPaths.SignIn, signIn);
 
                 _loginScreen.EndLoadingState();
+
+                switch (res.ErrorType)
+                {
+                    case ErrorType.None:
+                    {
+                        _loginScreen.AccessToken = res.Data;
+                        _loginScreen.GoToDashboard();
+                        break;
+                    }
+                    case ErrorType.Actionable:
+                    {
+                        _loginScreen.UsernameError = _loginScreen.ErrorForUsername;
+                        _loginScreen.PasswordError = _loginScreen.ErrorForPassword;
+                        break;
+                    }
+                    case ErrorType.NonActionable:
+                        _loginScreen.DisplayError(res.Error);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
 
             }
         }

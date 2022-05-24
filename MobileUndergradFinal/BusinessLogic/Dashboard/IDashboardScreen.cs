@@ -2,9 +2,8 @@
 
 namespace BusinessLogic.Dashboard
 {
-    public interface IDashboardScreen
+    public interface IDashboardScreen : IAuthenticatedScreen
     {
-        void SignOutAndMoveToLogin();
         void MoveToAddNewFountain();
 
         Action OnSignOutPress { get; set; }

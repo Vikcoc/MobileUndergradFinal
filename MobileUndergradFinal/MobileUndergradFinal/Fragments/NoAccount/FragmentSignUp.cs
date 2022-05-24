@@ -8,6 +8,7 @@ using Android.Views.InputMethods;
 using BusinessLogic.LoginRegister;
 using Google.Android.Material.Snackbar;
 using Google.Android.Material.TextField;
+using MobileUndergradFinal.Activities;
 
 namespace MobileUndergradFinal.Fragments.NoAccount
 {
@@ -98,12 +99,12 @@ namespace MobileUndergradFinal.Fragments.NoAccount
         public Action OnGoBackPress { get; set; }
         public void GoToDashboard()
         {
-            ((LoginRegister)Activity).GoToDashboard();
+            ((LoginRegisterActivity)Activity).GoToDashboard();
         }
 
         public void GoBack()
         {
-            ((LoginRegister)Activity).GoToSignIn();
+            ((LoginRegisterActivity)Activity).GoToSignIn();
         }
 
         public void StartLoadingState()
@@ -120,5 +121,15 @@ namespace MobileUndergradFinal.Fragments.NoAccount
 
         public string ErrorForUsername => Resources.GetString(Resource.String.sign_up_username_error);
         public string ErrorForPassword => Resources.GetString(Resource.String.sign_up_password_error);
+
+        public string AccessToken
+        {
+            set => ((TokenAndErrorActivity)Activity).AccessToken = value;
+        }
+
+        public void DisplayError(string error)
+        {
+            ((TokenAndErrorActivity)Activity).DisplayError(error);
+        }
     }
 }

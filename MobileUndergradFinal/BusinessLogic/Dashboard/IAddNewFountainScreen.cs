@@ -6,12 +6,10 @@ using Communication.SourceVariantDto;
 
 namespace BusinessLogic.Dashboard
 {
-    public interface IAddNewFountainScreen
+    public interface IAddNewFountainScreen : IAuthenticatedScreen
     {
         Func<Task> OnScreenVisible { get; set; }
         void SetWaterSourceVariants(List<WaterSourceVariantDto> waterSources);
         Guid? SelectedVariant { get; }
-
-        string AccessToken { get; }
     }
 }

@@ -7,11 +7,13 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Network.Environment;
+using Network.Response;
 using Newtonsoft.Json;
 
 namespace Network
 {
-    public class NetworkService : INetworkService
+    public class NetworkService
     {
         public string BearerToken { get; set; }
 
@@ -22,17 +24,17 @@ namespace Network
             _address = EnvironmentSettings.Instance.Information.BackendAddress;
         }
 
-        public async Task GetAsync<T>([NotNull] string path, Action<T> onSuccess, Action<List<string>> onError) where T : class
+        public async Task<NetworkResponse<T>> GetAsync<T>([NotNull] string path) where T : class
         {
-            await MakeRequestAsync(HttpMethod.Get, path, onSuccess, onError);
+            return await MakeRequestAsync<T>(HttpMethod.Get, path);
         }
 
-        public async Task PostAsync<T>([NotNull] string path, object body, Action<T> onSuccess, Action<List<string>> onError) where T : class
+        public async Task<NetworkResponse<T>> PostAsync<T>([NotNull] string path, object body) where T : class
         {
-            await MakeRequestAsync(HttpMethod.Post, path, onSuccess, onError, body);
+            return await MakeRequestAsync<T>(HttpMethod.Post, path, body);
         }
 
-        private async Task MakeRequestAsync<T>([NotNull] HttpMethod method, [NotNull] string path, Action<T> onSuccess, Action<List<string>> onError, object body = null) where T : class
+        private async Task<NetworkResponse<T>> MakeRequestAsync<T>([NotNull] HttpMethod method, [NotNull] string path, object body = null) where T : class
         {
             HttpResponseMessage response;
             try
@@ -70,49 +72,65 @@ namespace Network
             }
             catch (Exception e)
             {
-                onError?.Invoke(new List<string>{e.Message});
-                return;
+                return new NetworkResponse<T>
+                {
+                    ErrorType = ErrorType.NonActionable,
+                    Error = e.Message
+                };
             }
 
             if (response?.StatusCode < HttpStatusCode.BadRequest)
             {
                 if (typeof(T) == typeof(Stream))
                 {
-                    onSuccess?.Invoke(await response.Content.ReadAsStreamAsync() as T);
+                    return new NetworkResponse<T>
+                    {
+                        ErrorType = ErrorType.None,
+                        Data = await response.Content.ReadAsStreamAsync() as T
+                    };
                 }
-                else
+
+                var res = await response.Content.ReadAsStringAsync();
+                if (typeof(T) == typeof(string))
+                    return new NetworkResponse<T>
+                    {
+                        ErrorType = ErrorType.None,
+                        Data = res as T
+                    };
+                return new NetworkResponse<T>
+                {
+                    ErrorType = ErrorType.None,
+                    Data = JsonConvert.DeserializeObject<T>(res)
+                };
+            }
+
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.Unauthorized:
+                    return new NetworkResponse<T>
+                    {
+                        ErrorType = ErrorType.Actionable,
+                        Error = "401 Unauthorized"
+                    };
+                case HttpStatusCode.BadRequest:
                 {
                     var res = await response.Content.ReadAsStringAsync();
-                    if (typeof(T) == typeof(string))
-                        onSuccess?.Invoke(res as T);
-                    else
-                        onSuccess?.Invoke(JsonConvert.DeserializeObject<T>(res));
+                    return new NetworkResponse<T>
+                    {
+                        ErrorType = ErrorType.Actionable,
+                        Error = res
+                    };
                 }
-            }
-            else
-            {
-                switch (response.StatusCode)
+                default:
                 {
-                    case HttpStatusCode.Unauthorized:
-                        onError?.Invoke(new List<string>{"401 Unauthorized"});
-                        break;
-                    case HttpStatusCode.InternalServerError:
-                        onError?.Invoke(new List<string> { "500 Internal server error" });
-                        break;
-                    case HttpStatusCode.BadRequest:
+                    var res = await response.Content.ReadAsStringAsync();
+                    return new NetworkResponse<T>
                     {
-                        var res = await response.Content.ReadAsStringAsync();
-                        onError?.Invoke(JsonConvert.DeserializeObject<List<string>>(res));
-                        break;
-                    }
-                    default:
-                    {
-                        var res = await response.Content.ReadAsStringAsync();
-                        onError?.Invoke(new List<string>{res});
-                        break;
+                        ErrorType = ErrorType.NonActionable,
+                        Error = res
+                    };
                     }
 
-                }
             }
         }
     }

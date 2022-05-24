@@ -8,6 +8,7 @@ using Google.Android.Material.Snackbar;
 using Google.Android.Material.TextField;
 using System;
 using System.Threading.Tasks;
+using MobileUndergradFinal.Activities;
 
 namespace MobileUndergradFinal.Fragments.NoAccount
 {
@@ -100,17 +101,17 @@ namespace MobileUndergradFinal.Fragments.NoAccount
 
         public void GoToSignUp()
         {
-            ((LoginRegister)Activity).GoToSignUp();
+            ((LoginRegisterActivity)Activity).GoToSignUp();
         }
 
         public void GoToDashboard()
         {
-            ((LoginRegister)Activity).GoToDashboard();
+            ((LoginRegisterActivity)Activity).GoToDashboard();
         }
 
         public void GoBack()
         {
-            ((LoginRegister) Activity).GoBack();
+            ((LoginRegisterActivity) Activity).GoBack();
         }
 
 
@@ -133,11 +134,12 @@ namespace MobileUndergradFinal.Fragments.NoAccount
 
         public string AccessToken
         {
-            set
-            {
-                var preferences = Context.GetSharedPreferences(Resources.GetString(Resource.String.auth), FileCreationMode.Private);
-                preferences.Edit().PutString(Resources.GetString(Resource.String.access_token), value).Apply();
-            }
+            set => ((TokenAndErrorActivity)Activity).AccessToken = value;
+        }
+
+        public void DisplayError(string error)
+        {
+            ((TokenAndErrorActivity)Activity).DisplayError(error);
         }
     }
 }

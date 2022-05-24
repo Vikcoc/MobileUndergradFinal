@@ -10,10 +10,10 @@ using BusinessLogic.Dashboard;
 using MobileUndergradFinal.Adapters;
 using MobileUndergradFinal.ItemDecorators;
 
-namespace MobileUndergradFinal
+namespace MobileUndergradFinal.Activities
 {
     [Activity(Label = "DashboardActivity", ScreenOrientation = ScreenOrientation.Portrait)]
-    public class DashboardActivity : AppCompatActivity, IDashboardScreen
+    public class DashboardActivity : TokenAndErrorActivity, IDashboardScreen
     {
 
         private readonly DashboardLogic _dashboard;
@@ -43,16 +43,6 @@ namespace MobileUndergradFinal
 
             var view = FindViewById(Resource.Id.signOut);
             view.Click += (sender, args) => OnSignOutPress?.Invoke();
-        }
-
-        public void SignOutAndMoveToLogin()
-        {
-            var preferences = this.GetSharedPreferences(Resources.GetString(Resource.String.auth),
-                FileCreationMode.Private);
-            preferences.Edit().PutString(Resources.GetString(Resource.String.access_token), "").Apply();
-            var intent = new Intent(this, typeof(LoginRegister));
-            intent.AddFlags(ActivityFlags.ClearTask | ActivityFlags.NewTask);
-            StartActivity(intent);
         }
 
         public void MoveToAddNewFountain()
