@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Dashboard
 {
@@ -8,5 +9,9 @@ namespace BusinessLogic.Dashboard
 
         Action OnSignOutPress { get; set; }
         Action OnAddNewFountainPress { get; set; }
+        Func<Task> OnScreenVisible { get; set; }
+
+        string Welcome { set; }
+        string WelcomeText { get; }
     }
 }

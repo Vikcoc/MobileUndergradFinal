@@ -40,4 +40,5 @@
 	<string name="dashboard_contributions">"Your contributions"</string>
 	<string name="dashboard_see_all">"See all"</string>
 	<string name="dashboard_add_new">"Add new"</string>
+	<string name="dashboard_sign_out">"Sign out"</string>
 </resources>

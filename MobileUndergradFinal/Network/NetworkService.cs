@@ -110,7 +110,7 @@ namespace Network
                     return new NetworkResponse<T>
                     {
                         ErrorType = ErrorType.Actionable,
-                        Error = "401 Unauthorized"
+                        Error = ErrorStrings.Unauthorized
                     };
                 case HttpStatusCode.BadRequest:
                 {
@@ -129,7 +129,7 @@ namespace Network
                         ErrorType = ErrorType.NonActionable,
                         Error = res
                     };
-                    }
+                }
 
             }
         }

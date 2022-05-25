@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -17,6 +18,8 @@ namespace MobileUndergradFinal.Activities
     {
 
         private readonly DashboardLogic _dashboard;
+
+        private TextView _welcome;
         public DashboardActivity()
         {
             _dashboard = new DashboardLogic(this);
@@ -43,6 +46,15 @@ namespace MobileUndergradFinal.Activities
 
             var view = FindViewById(Resource.Id.signOut);
             view.Click += (sender, args) => OnSignOutPress?.Invoke();
+
+            _welcome = FindViewById<TextView>(Resource.Id.textView3);
+
+            OnCreated();
+        }
+
+        private async void OnCreated()
+        {
+            await OnScreenVisible();
         }
 
         public void MoveToAddNewFountain()
@@ -52,5 +64,11 @@ namespace MobileUndergradFinal.Activities
 
         public Action OnSignOutPress { get; set; }
         public Action OnAddNewFountainPress { get; set; }
+        public Func<Task> OnScreenVisible { get; set; }
+        public string Welcome
+        {
+            set => _welcome.Text = value;
+        }
+        public string WelcomeText => Resources.GetString(Resource.String.dashboard_welcome);
     }
 }

@@ -161,7 +161,7 @@
 	            android:layout_marginBottom="5dp"
 	            android:layout_height="wrap_content"
 	            android:layout_width="wrap_content"
-	            android:text="Sign out"
+	            android:text="@string/dashboard_sign_out"
 	            android:backgroundTint="?attr/colorError"/>
 
         </LinearLayout>
