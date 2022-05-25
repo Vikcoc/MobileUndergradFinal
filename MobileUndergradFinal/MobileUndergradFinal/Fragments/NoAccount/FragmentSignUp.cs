@@ -14,9 +14,11 @@ namespace MobileUndergradFinal.Fragments.NoAccount
 {
     public class FragmentSignUp : SwappableFragment, ISignUpScreen
     {
+        private TextInputEditText _email;
         private TextInputEditText _username;
         private TextInputEditText _password;
 
+        private TextInputLayout _emailLayout;
         private TextInputLayout _usernameLayout;
         private TextInputLayout _passwordLayout;
 
@@ -32,14 +34,20 @@ namespace MobileUndergradFinal.Fragments.NoAccount
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            _username = view.FindViewById<TextInputEditText>(Resource.Id.textInputEditText1);
-            _password = view.FindViewById<TextInputEditText>(Resource.Id.textInputEditText2);
+            _email = view.FindViewById<TextInputEditText>(Resource.Id.textInputEditText1);
+            _username = view.FindViewById<TextInputEditText>(Resource.Id.textInputEditText2);
+            _password = view.FindViewById<TextInputEditText>(Resource.Id.textInputEditText3);
 
-            _usernameLayout = view.FindViewById<TextInputLayout>(Resource.Id.textInputLayout);
-            _passwordLayout = view.FindViewById<TextInputLayout>(Resource.Id.textInputLayout2);
+            _emailLayout = view.FindViewById<TextInputLayout>(Resource.Id.textInputLayout);
+            _usernameLayout = view.FindViewById<TextInputLayout>(Resource.Id.textInputLayout2);
+            _passwordLayout = view.FindViewById<TextInputLayout>(Resource.Id.textInputLayout3);
 
             _submitButton = view.FindViewById<Button>(Resource.Id.button);
 
+            _email.Click += (sender, args) =>
+            {
+                OnEmailTouch?.Invoke();
+            };
             _username.Click += (sender, args) =>
             {
                 OnUsernameTouch?.Invoke();
@@ -49,6 +57,11 @@ namespace MobileUndergradFinal.Fragments.NoAccount
                 OnPasswordTouch?.Invoke();
             };
 
+            _email.FocusChange += (sender, args) =>
+            {
+                if (args.HasFocus)
+                    OnEmailTouch?.Invoke();
+            };
             _username.FocusChange += (sender, args) =>
             {
                 if (args.HasFocus)
@@ -80,6 +93,13 @@ namespace MobileUndergradFinal.Fragments.NoAccount
             OnGoBackPress?.Invoke();
         }
 
+        public string Email => _email.Text;
+        public string EmailError
+        {
+            get => _emailLayout.Error;
+            set => _emailLayout.Error = value;
+        }
+        public Action OnEmailTouch { get; set; }
         public string Username => _username.Text;
         public string UsernameError
         {
@@ -119,6 +139,7 @@ namespace MobileUndergradFinal.Fragments.NoAccount
                 .SetAction("Action", (View.IOnClickListener)null).Show();
         }
 
+        public string ErrorForEmail => Resources.GetString(Resource.String.sign_up_email_error);
         public string ErrorForUsername => Resources.GetString(Resource.String.sign_up_username_error);
         public string ErrorForPassword => Resources.GetString(Resource.String.sign_up_password_error);
 

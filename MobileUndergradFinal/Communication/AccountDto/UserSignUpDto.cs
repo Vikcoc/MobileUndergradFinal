@@ -6,12 +6,14 @@ namespace Communication.AccountDto
     {
         [MaxLength(80)]
         [Required]
-        [DataType(DataType.EmailAddress)]
+        [RegularExpression("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")]
         public string Email { get; set; }
         [MaxLength(100)]
         [MinLength(8)]
+        [Required]
         public string Password { get; set; }
         [MaxLength(20)]
-        public string PhoneNumber { get; set; }
+        [Required]
+        public string UserName { get; set; }
     }
 }

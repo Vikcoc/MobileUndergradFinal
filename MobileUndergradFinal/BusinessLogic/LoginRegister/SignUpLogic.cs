@@ -23,6 +23,7 @@ namespace BusinessLogic.LoginRegister
             _signUpScreen.OnSubmitButtonPress += SignUp;
             _signUpScreen.OnGoToSignInPress += GoBack;
             _signUpScreen.OnGoBackPress += GoBack;
+            _signUpScreen.OnEmailTouch += EmailTouch;
             _signUpScreen.OnUsernameTouch += UsernameTouch;
             _signUpScreen.OnPasswordTouch += PasswordTouch;
         }
@@ -41,6 +42,10 @@ namespace BusinessLogic.LoginRegister
         {
             _signUpScreen.UsernameError = "";
         }
+        private void EmailTouch()
+        {
+            _signUpScreen.EmailError = "";
+        }
 
         private async Task SignUp()
         {
@@ -49,7 +54,7 @@ namespace BusinessLogic.LoginRegister
             if (!regex.IsMatch(_signUpScreen.Username))
             {
                 makeRequest = false;
-                _signUpScreen.UsernameError = _signUpScreen.ErrorForUsername;
+                _signUpScreen.EmailError = _signUpScreen.ErrorForEmail;
             }
 
             var regex2 = new Regex("(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@_$!%*?&-])[A-Za-z\\d@_$!%*?&-]{8,}");
@@ -59,6 +64,12 @@ namespace BusinessLogic.LoginRegister
                 _signUpScreen.PasswordError = _signUpScreen.ErrorForPassword;
             }
 
+            if (string.IsNullOrWhiteSpace(_signUpScreen.Username))
+            {
+                makeRequest = false;
+                _signUpScreen.UsernameError = _signUpScreen.ErrorForUsername;
+            }
+
             if (makeRequest)
             {
                 _signUpScreen.StartLoadingState();
@@ -66,7 +77,8 @@ namespace BusinessLogic.LoginRegister
                 var signUp = new UserSignUpDto
                 {
                     Email = _signUpScreen.Username,
-                    Password = _signUpScreen.Password
+                    Password = _signUpScreen.Password,
+                    UserName = _signUpScreen.Username
                 };
 
                 var res = await _networkService.PostAsync<string>(RequestPaths.SignUp, signUp);

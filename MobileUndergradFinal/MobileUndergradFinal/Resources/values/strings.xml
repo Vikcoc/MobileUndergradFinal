@@ -10,7 +10,7 @@
 
 	<!--Sign in-->
 	<string name="sign_in_top">"Sign in to use the app"</string>
-	<string name="sign_in_username">"Username"</string>
+	<string name="sign_in_email">"Username"</string>
 	<string name="sign_in_password">"Password"</string>
 	<string name="sign_in_sign_in">"Sign in"</string>
 	<string name="sign_in_sign_up">"Or sign up if you don't have an account"</string>
@@ -21,8 +21,10 @@
 
 	<!--Sign up-->
 	<string name="sign_up_top">"Sign up if you don't have an account"</string>
-	<string name="sign_up_username">"Email"</string>
-	<string name="sign_up_username_error">"Must match email pattern"</string>
+	<string name="sign_up_email">"Email"</string>
+	<string name="sign_up_username">"Username"</string>
+	<string name="sign_up_email_error">"Must match email pattern"</string>
+	<string name="sign_up_username_error">"Must be non empty"</string>
 	<string name="sign_up_password">"Password"</string>
 	<string name="sign_up_sign_in">"Sign up"</string>
 	<string name="sign_up_sign_up">"Or sign in if you already have an account"</string>
