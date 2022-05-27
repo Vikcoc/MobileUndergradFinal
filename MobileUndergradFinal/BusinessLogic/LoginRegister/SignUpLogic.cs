@@ -1,11 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Communication.AccountDto;
+﻿using Communication.AccountDto;
 using Network;
 using Network.Response;
+using System;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.LoginRegister
 {
@@ -23,14 +21,6 @@ namespace BusinessLogic.LoginRegister
             _signUpScreen.OnSubmitButtonPress += SignUp;
             _signUpScreen.OnGoToSignInPress += GoBack;
             _signUpScreen.OnGoBackPress += GoBack;
-            _signUpScreen.OnEmailTouch += EmailTouch;
-            _signUpScreen.OnUsernameTouch += UsernameTouch;
-            _signUpScreen.OnPasswordTouch += PasswordTouch;
-        }
-
-        private void PasswordTouch()
-        {
-            _signUpScreen.PasswordError = "";
         }
 
         private void GoBack()
@@ -38,20 +28,11 @@ namespace BusinessLogic.LoginRegister
             _signUpScreen.GoBack();
         }
 
-        private void UsernameTouch()
-        {
-            _signUpScreen.UsernameError = "";
-        }
-        private void EmailTouch()
-        {
-            _signUpScreen.EmailError = "";
-        }
-
         private async Task SignUp()
         {
             var makeRequest = true;
             var regex = new Regex("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
-            if (!regex.IsMatch(_signUpScreen.Username))
+            if (!regex.IsMatch(_signUpScreen.Email))
             {
                 makeRequest = false;
                 _signUpScreen.EmailError = _signUpScreen.ErrorForEmail;
@@ -76,7 +57,7 @@ namespace BusinessLogic.LoginRegister
 
                 var signUp = new UserSignUpDto
                 {
-                    Email = _signUpScreen.Username,
+                    Email = _signUpScreen.Email,
                     Password = _signUpScreen.Password,
                     UserName = _signUpScreen.Username
                 };

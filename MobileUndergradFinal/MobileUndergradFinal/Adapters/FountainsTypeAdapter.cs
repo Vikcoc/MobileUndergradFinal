@@ -1,11 +1,11 @@
-﻿using Android.Views;
+﻿using Android.Graphics;
+using Android.Views;
+using Android.Widget;
 using AndroidX.RecyclerView.Widget;
+using MobileUndergradFinal.AdapterDto;
 using MobileUndergradFinal.Helper;
 using System;
 using System.Collections.Generic;
-using Android.Widget;
-using Communication.SourceVariantDto;
-using MobileUndergradFinal.AdapterDto;
 
 namespace MobileUndergradFinal.Adapters
 {
@@ -28,6 +28,12 @@ namespace MobileUndergradFinal.Adapters
             topText.Text = _water[position].Name;
             var bottomText = holder.ItemView.FindViewById<TextView>(Resource.Id.textView5);
             bottomText.Text = _water[position].Description;
+            if (_water[position].Picture != null)
+            {
+                var picture = holder.ItemView.FindViewById<ImageView>(Resource.Id.imageView2);
+                picture.SetImageBitmap(_water[position].Picture);
+            }
+
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
@@ -67,6 +73,15 @@ namespace MobileUndergradFinal.Adapters
                 NotifyItemRangeInserted(current, items.Count);
             else
                 NotifyDataSetChanged();
+        }
+
+        public void AddPicture(Guid variantId, Bitmap picture)
+        {
+            var index = _water.FindIndex(x => x.Id == variantId);
+            if(index == -1)
+                return;
+            _water[index].Picture = picture;
+            NotifyItemChanged(index);
         }
     }
 }

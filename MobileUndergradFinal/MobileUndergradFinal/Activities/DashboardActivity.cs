@@ -59,7 +59,7 @@ namespace MobileUndergradFinal.Activities
 
         public void MoveToAddNewFountain()
         {
-            StartActivity(typeof(AddNewFountainActivity));
+            StartActivity(typeof(AddNewPlaceActivity));
         }
 
         public Action OnSignOutPress { get; set; }

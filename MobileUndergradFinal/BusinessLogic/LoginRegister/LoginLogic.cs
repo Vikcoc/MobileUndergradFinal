@@ -1,10 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Communication.AccountDto;
+﻿using Communication.AccountDto;
 using Network;
 using Network.Response;
+using System;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.LoginRegister
 {
@@ -19,8 +17,6 @@ namespace BusinessLogic.LoginRegister
 
             _loginScreen.OnGoBackPress = GoBack;
             _loginScreen.OnSubmitButtonPress = SignIn;
-            _loginScreen.OnPasswordTouch = RemoveError;
-            _loginScreen.OnUsernameTouch = RemoveError;
             _loginScreen.OnGoToSignUpPress = GoToSignUp;
 
             _networkService = new NetworkService();
@@ -29,12 +25,6 @@ namespace BusinessLogic.LoginRegister
         private void GoToSignUp()
         {
             _loginScreen.GoToSignUp();
-        }
-
-        private void RemoveError()
-        {
-            _loginScreen.UsernameError = "";
-            _loginScreen.PasswordError = "";
         }
 
         private void GoBack()

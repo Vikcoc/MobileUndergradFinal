@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        map:cameraTargetLat="37"
-        map:cameraTargetLng="122"
-        map:cameraZoom="10.0"
+        map:cameraTargetLat="44.430449699320036"
+        map:cameraTargetLng="26.103905629824"
+        map:cameraZoom="15.0"
         map:uiZoomGestures="true"
         map:uiScrollGestures="true"
         map:uiRotateGestures="true"
@@ -36,27 +36,27 @@
 
     <ImageButton
         android:id="@+id/currentLoc"
-        android:layout_width="40dp"
+        android:layout_width="60dp"
         android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="@id/map"
         app:layout_constraintBottom_toBottomOf="@id/map"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
         android:contentDescription="@string/placeholder"
-        android:src="@drawable/water_fountain"
+        android:src="@drawable/locate"
 		android:backgroundTint="?attr/colorPrimary"
         android:scaleType="fitCenter"
 	/>
 
     <ImageButton
         android:id="@+id/printLoc"
-        android:layout_width="40dp"
+        android:layout_width="60dp"
         android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="@id/currentLoc"
         app:layout_constraintBottom_toTopOf="@id/currentLoc"
         android:layout_marginBottom="5dp"
         android:contentDescription="@string/placeholder"
-        android:src="@drawable/water_fountain_break"
+        android:src="@drawable/submit"
         android:backgroundTint="?attr/colorPrimary"
         android:scaleType="fitCenter"
 	/>
@@ -70,12 +70,12 @@
 
     <ImageView
         android:id="@+id/pin"
-        android:layout_width="50sp"
-        android:layout_height="50sp"
+        android:layout_width="30dp"
+        android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="@id/map"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintStart_toStartOf="@id/map"
-		android:src="@drawable/water_fountain_valid"
+		android:src="@drawable/center_pin"
         android:contentDescription="@string/placeholder" 
 	/>
 

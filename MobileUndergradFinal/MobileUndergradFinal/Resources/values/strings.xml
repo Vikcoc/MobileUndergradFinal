@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Undergrad</string>
     <string name="app_logo">Water fountain SVG</string>
@@ -41,4 +42,13 @@
 	<string name="dashboard_see_all">"See all"</string>
 	<string name="dashboard_add_new">"Add new"</string>
 	<string name="dashboard_sign_out">"Sign out"</string>
+
+	<!--Add place-->
+	<string name="add_place_description">"Add a new fountain to the map"</string>
+	<string name="add_place_nickname">"Nickname"</string>
+	<string name="add_place_tap_name">"Tap to select on map"</string>
+	<string name="add_place_source_variant">"Select variant"</string>
+	<string name="add_place_add_pictures">"Add pictures"</string>
+	<string name="add_place_create">"Create"</string>
+	<string name="add_place_picture">"Picture for place"</string>
 </resources>

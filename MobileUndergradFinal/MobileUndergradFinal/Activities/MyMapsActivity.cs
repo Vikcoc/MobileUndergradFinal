@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Android.App;
+﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.Gms.Location;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.Locations;
 using Android.OS;
+using Android.Views;
 using Android.Widget;
-using AndroidX.AppCompat.App;
+using Google.Android.Material.Snackbar;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MobileUndergradFinal.Activities
 {
@@ -42,22 +44,25 @@ namespace MobileUndergradFinal.Activities
             };
 
             var but2 = FindViewById<ImageButton>(Resource.Id.printLoc);
-            but2.Click += (sender, args) =>
+            but2.Click += async (sender, args) =>
             {
-                System.Diagnostics.Debug.WriteLine("{0} {1}", _map.CameraPosition.Target.Latitude, _map.CameraPosition.Target.Longitude);
-
                 var geocode = new Geocoder(this);
 
-                var addresses = geocode.GetFromLocation(_map.CameraPosition.Target.Latitude, _map.CameraPosition.Target.Longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                var addresses = await geocode.GetFromLocationAsync(_map.CameraPosition.Target.Latitude, _map.CameraPosition.Target.Longitude, 1);
 
-                var address = addresses.First().GetAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                var city = addresses.First().Locality;
-                var state = addresses.First().AdminArea;
-                var country = addresses.First().CountryName;
-                var postalCode = addresses.First().PostalCode;
-                var knownName = addresses.First().FeatureName;
+                if (addresses == null || !addresses.Any())
+                {
+                    var toast = Snackbar.Make(this, (View)sender, "Error: What you're looking at not found", BaseTransientBottomBar.LengthLong);
+                    toast?.Show();
+                    return;
+                }
 
-                System.Diagnostics.Debug.WriteLine("{0} ~ {1} ~ {2} ~ {3} ~ {4} ~ {5}", address, city, state, country, postalCode, knownName);
+                var intent = new Intent();
+                intent.PutExtra("address", addresses.First().GetAddressLine(0));
+                intent.PutExtra("latitude", _map.CameraPosition.Target.Latitude);
+                intent.PutExtra("longitude", _map.CameraPosition.Target.Longitude);
+                SetResult(Result.Ok, intent);
+                Finish();
             };
 
             var search = FindViewById<AndroidX.AppCompat.Widget.SearchView>(Resource.Id.idSearchView);
@@ -78,19 +83,29 @@ namespace MobileUndergradFinal.Activities
                     System.Diagnostics.Debug.WriteLine(e);
                     return;
                 }
-                if(addressList == null || !addressList.Any())
-                    return; //maybe error message?
+                if (addressList == null || !addressList.Any())
+                {
+                    var toast = Snackbar.Make(this, (View)sender, "Error: " + args.NewText + " not found", BaseTransientBottomBar.LengthLong);
+                    toast?.Show();
+                    return;
+                }
 
                 _map.AnimateCamera(CameraUpdateFactory.NewLatLngZoom(new LatLng(addressList.First().Latitude, addressList.First().Longitude), 15));
             };
         }
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        public override async void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-            if(grantResults.Any(x => x == Permission.Granted))
+            if (grantResults.Any(x => x == Permission.Granted))
+            {
                 _map.MyLocationEnabled = true;
+                var locationProvider = LocationServices.GetFusedLocationProviderClient(this);
+                var x = await locationProvider.GetLastLocationAsync();
+
+                _map.AnimateCamera(CameraUpdateFactory.NewLatLngZoom(new LatLng(x.Latitude, x.Longitude), 15));
+            }
         }
 
         public async void OnMapReady(GoogleMap map)

@@ -46,31 +46,31 @@ namespace MobileUndergradFinal.Fragments.NoAccount
 
             _email.Click += (sender, args) =>
             {
-                OnEmailTouch?.Invoke();
+                _emailLayout.Error = "";
             };
             _username.Click += (sender, args) =>
             {
-                OnUsernameTouch?.Invoke();
+                _usernameLayout.Error = "";
             };
             _password.Click += (sender, args) =>
             {
-                OnPasswordTouch?.Invoke();
+                _passwordLayout.Error = "";
             };
 
             _email.FocusChange += (sender, args) =>
             {
                 if (args.HasFocus)
-                    OnEmailTouch?.Invoke();
+                    _emailLayout.Error = "";
             };
             _username.FocusChange += (sender, args) =>
             {
                 if (args.HasFocus)
-                    OnUsernameTouch?.Invoke();
+                    _usernameLayout.Error = "";
             };
             _password.FocusChange += (sender, args) =>
             {
                 if (args.HasFocus)
-                    OnPasswordTouch?.Invoke();
+                    _passwordLayout.Error = "";
             };
 
             _submitButton.Click += async (sender, args) =>
@@ -99,21 +99,18 @@ namespace MobileUndergradFinal.Fragments.NoAccount
             get => _emailLayout.Error;
             set => _emailLayout.Error = value;
         }
-        public Action OnEmailTouch { get; set; }
         public string Username => _username.Text;
         public string UsernameError
         {
             get => _usernameLayout.Error;
             set => _usernameLayout.Error = value;
         }
-        public Action OnUsernameTouch { get; set; }
         public string Password => _password.Text;
         public string PasswordError
         {
             get => _passwordLayout.Error;
             set => _passwordLayout.Error = value;
         }
-        public Action OnPasswordTouch { get; set; }
         public Func<Task> OnSubmitButtonPress { get; set; }
         public Action OnGoToSignInPress { get; set; }
         public Action OnGoBackPress { get; set; }

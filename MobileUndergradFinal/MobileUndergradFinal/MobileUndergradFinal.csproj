@@ -63,16 +63,18 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activities\AddNewPlaceActivity.cs" />
     <Compile Include="Activities\TokenAndErrorActivity.cs" />
     <Compile Include="AdapterDto\WaterSourceVariant.cs" />
     <Compile Include="Adapters\FountainsTypeAdapter.cs" />
     <Compile Include="Adapters\FountainsAdapter.cs" />
-    <Compile Include="Activities\AddNewFountainActivity.cs" />
+    <Compile Include="Adapters\PlacePictureAdapter.cs" />
     <Compile Include="CustomLayouts\CollapsibleToolbar.cs" />
     <Compile Include="Activities\DashboardActivity.cs" />
     <Compile Include="Fragments\NoAccount\FragmentSignIn.cs" />
     <Compile Include="Fragments\NoAccount\FragmentSignUp.cs" />
     <Compile Include="Fragments\SwappableFragment.cs" />
+    <Compile Include="Helper\BitmapHelper.cs" />
     <Compile Include="Helper\CustomViewHolder.cs" />
     <Compile Include="ItemDecorators\FountainTypesDecorator.cs" />
     <Compile Include="ItemDecorators\FountainsDecorator.cs" />
@@ -191,17 +193,6 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\add_new_fountain.xml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\xml\add_new_fountain_scene.xml">
-      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
-      <SubType>Designer</SubType>
-    </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\fountain_type_layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -219,6 +210,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifestRelease.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\add_new_place.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\submit.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\center_pin.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\locate.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\select_variant_dialog_layout.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\xml\provider_paths.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\add_new_place_picture.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
