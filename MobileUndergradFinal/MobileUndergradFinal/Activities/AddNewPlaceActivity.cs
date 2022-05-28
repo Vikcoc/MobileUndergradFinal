@@ -15,6 +15,7 @@ using AndroidX.RecyclerView.Widget;
 using BusinessLogic.Dashboard;
 using Communication.SourceVariantDto;
 using Google.Android.Material.BottomSheet;
+using Google.Android.Material.TextField;
 using MobileUndergradFinal.AdapterDto;
 using MobileUndergradFinal.Adapters;
 using MobileUndergradFinal.Helper;
@@ -23,6 +24,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using Android.Graphics.Drawables;
+using Android.Views.InputMethods;
 using Environment = Android.OS.Environment;
 using File = Java.IO.File;
 using Uri = Android.Net.Uri;
@@ -34,8 +38,11 @@ namespace MobileUndergradFinal.Activities
     {
         private GoogleMap _map;
         private string _address;
-        private decimal _latitude;
-        private decimal _longitude;
+        private decimal? _latitude;
+        private decimal? _longitude;
+
+        private TextView _nickname;
+        private TextInputLayout _nicInputLayout;
 
         private View _cover;
         private View _text;
@@ -43,12 +50,64 @@ namespace MobileUndergradFinal.Activities
         private View _selectedView;
         private Button _selectVariant;
 
+        private Button _pictureButton;
+
         private BottomSheetDialog _dialog;
         private FountainsTypeAdapter _fountainsTypeAdapter;
 
         private readonly AddNewFountainLogic _logic;
 
-        public Guid? SelectedVariant { get; private set; }
+        public Guid? VariantId { get; private set; }
+
+        public string Nickname => _nickname.Text;
+
+        public string Address => _address;
+
+        public decimal? Latitude => _latitude;
+
+        public decimal? Longitude => _longitude;
+
+        public List<Stream> Pictures => _pictureAdapter.Pictures.Select(x => ContentResolver.OpenInputStream(x)).ToList();
+
+        public string NicknameError
+        {
+            set => _nicInputLayout.Error = value;
+        }
+
+        public string MapError
+        {
+            set
+            {
+                var text = FindViewById<TextView>(Resource.Id.mapErrorText);
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    text.Visibility = ViewStates.Invisible;
+                    _cover.SetBackgroundColor(new Color(0,0,0,112));
+                }
+                else
+                {
+                    _cover.Background = Resources.GetDrawable(Resource.Drawable.error_outline, Theme);
+                    text.Text = value;
+                    text.Visibility = ViewStates.Visible;
+                }
+
+            }
+        }
+
+        public string VariantError
+        {
+            set => _selectVariant.Error = value;
+        }
+        public string PicturesError
+        {
+            set => _pictureButton.Error = value;
+        }
+
+        public Func<Task> OnSubmitButtonPress { get; set; }
+        public string NicknameErrorText => Resources.GetString(Resource.String.add_place_nickname_error);
+        public string MapErrorText => Resources.GetString(Resource.String.add_place_map_error);
+        public string VariantErrorText => Resources.GetString(Resource.String.add_place_variant_error);
+        public string PicturesErrorText => Resources.GetString(Resource.String.add_place_pictures_error);
 
         private PlacePictureAdapter _pictureAdapter;
 
@@ -69,6 +128,20 @@ namespace MobileUndergradFinal.Activities
             var mapFragment = (SupportMapFragment)SupportFragmentManager.FindFragmentById(Resource.Id.map);
             mapFragment.GetMapAsync(this);
 
+            _nickname = FindViewById<TextView>(Resource.Id.nicknameText);
+            _nicInputLayout = FindViewById<TextInputLayout>(Resource.Id.nicknameTextLayout);
+
+            _nickname.Click += (sender, args) =>
+            {
+                _nicInputLayout.Error = "";
+            };
+
+            _nickname.FocusChange += (sender, args) =>
+            {
+                if (args.HasFocus)
+                    _nicInputLayout.Error = "";
+            };
+
             _cover = FindViewById<View>(Resource.Id.mapCover);
             _cover.Click += (sender, args) =>
             {
@@ -79,13 +152,21 @@ namespace MobileUndergradFinal.Activities
             _selectVariant = FindViewById<Button>(Resource.Id.selectVariantButton);
             _selectVariant.Click += (sender, args) => ShowDialog();
 
-
             _selectedView = FindViewById(Resource.Id.selected);
             _selectedView.Click += (sender, args) => ShowDialog();
 
 
-            var pictureButton = FindViewById<Button>(Resource.Id.addPictures);
-            pictureButton.Click += PictureButtonClick;
+            _pictureButton = FindViewById<Button>(Resource.Id.addPictures);
+            _pictureButton.Click += PictureButtonClick;
+
+            var submitButton = FindViewById<Button>(Resource.Id.createPlace);
+            submitButton.Click += async (sender, args) =>
+            {
+                var imm = (InputMethodManager)this.GetSystemService(InputMethodService);
+                imm.HideSoftInputFromWindow(submitButton.WindowToken, 0);
+                if (OnSubmitButtonPress != null)
+                    await OnSubmitButtonPress.Invoke();
+            };
 
             var recycler = FindViewById<RecyclerView>(Resource.Id.yourPictures);
             recycler.SetLayoutManager(new GridLayoutManager(this, 3, (int)Orientation.Vertical, false));
@@ -127,7 +208,7 @@ namespace MobileUndergradFinal.Activities
                 var recycler = _dialog.FindViewById<RecyclerView>(Resource.Id.fountainType);
                 _fountainsTypeAdapter = new FountainsTypeAdapter(variant =>
                 {
-                    SelectedVariant = variant.Id;
+                    VariantId = variant.Id;
                     var topText = _selectedView.FindViewById<TextView>(Resource.Id.textView4);
                     topText.Text = variant.Name;
                     var bottomText = _selectedView.FindViewById<TextView>(Resource.Id.textView5);
@@ -164,7 +245,7 @@ namespace MobileUndergradFinal.Activities
                 Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
                 picture);
             _fountainsTypeAdapter.AddPicture(variantId, bitmap);
-            if (SelectedVariant.HasValue && SelectedVariant.Value == variantId)
+            if (VariantId.HasValue && VariantId.Value == variantId)
                 _selectedView.FindViewById<ImageView>(Resource.Id.imageView2).SetImageBitmap(bitmap);
 
         }
@@ -204,11 +285,13 @@ namespace MobileUndergradFinal.Activities
                     _map.AddMarker(new MarkerOptions()
                         .SetPosition(fountainPosition)
                         .SetTitle("Selected position"));
+                    MapError = "";
                     break;
                 }
                 case Result.Ok when requestCode == 2 && data != null && (data.Data != null || data.ClipData != null):
                 {
-                    if(data.Data == null)
+                    _pictureButton.Error = null;
+                    if (data.Data == null)
                     {
                         var res = data.ClipData;
 
@@ -240,6 +323,7 @@ namespace MobileUndergradFinal.Activities
                 }
                 case Result.Ok when requestCode == 2 && (data == null || data.Data == null && data.ClipData == null):
                 {
+                    _pictureButton.Error = null;
                     var stream = ContentResolver.OpenInputStream(_photoURI);
                     var bitmap = BitmapHelper.GetRotated(
                         Resources.GetDimensionPixelSize(Resource.Dimension.image_size),

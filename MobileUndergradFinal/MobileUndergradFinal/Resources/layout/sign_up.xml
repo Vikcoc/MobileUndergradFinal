@@ -60,7 +60,8 @@
 	        app:layout_constraintEnd_toEndOf="parent"
 	        app:layout_constraintStart_toStartOf="parent"
 	        app:layout_constraintTop_toBottomOf="@+id/textView"
-	        app:layout_constraintVertical_bias="0.237">
+	        app:layout_constraintVertical_bias="0.237"
+			app:errorEnabled="true">
 
 	        <com.google.android.material.textfield.TextInputEditText
 				android:id="@+id/textInputEditText1"
@@ -82,7 +83,8 @@
 	        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
 	        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
 	        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
-	        app:layout_constraintVertical_bias="0.05">
+	        app:layout_constraintVertical_bias="0.05"
+			app:errorEnabled="true">
 
 	        <com.google.android.material.textfield.TextInputEditText
 		        android:id="@+id/textInputEditText2"
@@ -105,7 +107,8 @@
 			app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"
 			app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
 			app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-			app:layout_constraintVertical_bias="0.05">
+			app:layout_constraintVertical_bias="0.05"
+			app:errorEnabled="true">
 
 			<com.google.android.material.textfield.TextInputEditText
 				android:id="@+id/textInputEditText3"

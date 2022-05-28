@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Android.App;
 using Android.Graphics;
 using Android.Net;
 using Android.Views;
@@ -11,6 +13,8 @@ namespace MobileUndergradFinal.Adapters
     public class PlacePictureAdapter : RecyclerView.Adapter
     {
         private readonly List<(Uri, Bitmap)> _pictures;
+
+        public List<Uri> Pictures => _pictures.Select(x => x.Item1).ToList();
 
         public PlacePictureAdapter()
         {

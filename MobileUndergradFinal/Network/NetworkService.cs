@@ -24,17 +24,17 @@ namespace Network
             _address = EnvironmentSettings.Instance.Information.BackendAddress;
         }
 
-        public async Task<NetworkResponse<T>> GetAsync<T>([NotNull] string path) where T : class
+        public async Task<NetworkResponse<T>> GetAsync<T>([NotNull] string path)
         {
             return await MakeRequestAsync<T>(HttpMethod.Get, path);
         }
 
-        public async Task<NetworkResponse<T>> PostAsync<T>([NotNull] string path, object body) where T : class
+        public async Task<NetworkResponse<T>> PostAsync<T>([NotNull] string path, object body)
         {
             return await MakeRequestAsync<T>(HttpMethod.Post, path, body);
         }
 
-        private async Task<NetworkResponse<T>> MakeRequestAsync<T>([NotNull] HttpMethod method, [NotNull] string path, object body = null) where T : class
+        private async Task<NetworkResponse<T>> MakeRequestAsync<T>([NotNull] HttpMethod method, [NotNull] string path, object body = null)
         {
             HttpResponseMessage response;
             try
@@ -86,7 +86,7 @@ namespace Network
                     return new NetworkResponse<T>
                     {
                         ErrorType = ErrorType.None,
-                        Data = await response.Content.ReadAsStreamAsync() as T
+                        Data = (T) ((await response.Content.ReadAsStreamAsync()) as object)
                     };
                 }
 
@@ -95,7 +95,7 @@ namespace Network
                     return new NetworkResponse<T>
                     {
                         ErrorType = ErrorType.None,
-                        Data = res as T
+                        Data = (T) (object)res
                     };
                 return new NetworkResponse<T>
                 {

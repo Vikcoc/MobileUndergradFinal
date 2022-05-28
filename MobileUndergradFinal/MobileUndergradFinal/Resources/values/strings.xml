@@ -51,4 +51,8 @@
 	<string name="add_place_add_pictures">"Add pictures"</string>
 	<string name="add_place_create">"Create"</string>
 	<string name="add_place_picture">"Picture for place"</string>
+	<string name="add_place_nickname_error">"Must be known by something"</string>
+	<string name="add_place_map_error">"Must have a place"</string>
+	<string name="add_place_variant_error">"Must be of a kind"</string>
+	<string name="add_place_pictures_error">"Must have pictures"</string>
 </resources>
