@@ -65,7 +65,10 @@
   <ItemGroup>
     <Compile Include="Activities\AddNewPlaceActivity.cs" />
     <Compile Include="Activities\TokenAndErrorActivity.cs" />
+    <Compile Include="AdapterDto\WaterSourceContributionWithPlace.cs" />
+    <Compile Include="AdapterDto\WaterSourcePlaceListing.cs" />
     <Compile Include="AdapterDto\WaterSourceVariant.cs" />
+    <Compile Include="Adapters\ContributionListingAdapter.cs" />
     <Compile Include="Adapters\FountainsTypeAdapter.cs" />
     <Compile Include="Adapters\FountainsAdapter.cs" />
     <Compile Include="Adapters\PlacePictureAdapter.cs" />

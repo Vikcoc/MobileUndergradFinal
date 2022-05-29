@@ -12,5 +12,6 @@ namespace Network
         public const string UserName = "Account/name";
         public const string Picture = "Media/";
         public const string AddPlace = "WaterSourcePlace";
+        public const string MyContributions = "WaterSourceContribution/mine/";
     }
 }

@@ -1,15 +1,19 @@
-﻿using System;
-using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Widget;
-using AndroidX.AppCompat.App;
 using AndroidX.RecyclerView.Widget;
 using BusinessLogic.Dashboard;
 using MobileUndergradFinal.Adapters;
 using MobileUndergradFinal.ItemDecorators;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Communication.SourceContributionDto;
+using MobileUndergradFinal.AdapterDto;
+using MobileUndergradFinal.Helper;
 
 namespace MobileUndergradFinal.Activities
 {
@@ -20,6 +24,8 @@ namespace MobileUndergradFinal.Activities
         private readonly DashboardLogic _dashboard;
 
         private TextView _welcome;
+
+        private ContributionListingAdapter _contributionListingAdapter;
         public DashboardActivity()
         {
             _dashboard = new DashboardLogic(this);
@@ -38,7 +44,8 @@ namespace MobileUndergradFinal.Activities
 
             var yourContributions = FindViewById<RecyclerView>(Resource.Id.yourContributions);
             yourContributions.SetLayoutManager(new LinearLayoutManager(this));
-            yourContributions.SetAdapter(new FountainsAdapter());
+            _contributionListingAdapter = new ContributionListingAdapter();
+            yourContributions.SetAdapter(_contributionListingAdapter);
             yourContributions.AddItemDecoration(new FountainsDecorator(Resources.GetDimensionPixelOffset(Resource.Dimension.margin_small)));
 
             var addNew = FindViewById<Button>(Resource.Id.addNew);
@@ -70,5 +77,40 @@ namespace MobileUndergradFinal.Activities
             set => _welcome.Text = value;
         }
         public string WelcomeText => Resources.GetString(Resource.String.dashboard_welcome);
+
+        public List<WaterSourceContributionWithPlaceDto> WaterContributions
+        {
+            set
+            {
+                _contributionListingAdapter.AddItems(value.Select(x => new WaterSourceContributionWithPlace
+                {
+                    Id = x.Id,
+                    WaterSourcePlaceId = x.WaterSourcePlaceId,
+                    WaterSourcePlace = new WaterSourcePlaceListing
+                    {
+                        //Picture = x.WaterSourcePlace.,
+                        Nickname = x.WaterSourcePlace.Nickname,
+                        Latitude = x.WaterSourcePlace.Latitude,
+                        Address = x.WaterSourcePlace.Address,
+                        Id = x.WaterSourcePlace.Id,
+                        Longitude = x.WaterSourcePlace.Longitude,
+                        WaterSourceVariantId = x.WaterSourcePlace.WaterSourceVariantId,
+                    },
+                    ContributionType = x.ContributionType,
+                    Details = x.Details,
+                    RelatedContributionId = x.RelatedContributionId,
+                    WaterUserId = x.WaterUserId,
+                    
+                }).ToList());
+            }
+        }
+
+        public void AddContributionPicture(Guid contributionId, Stream image)
+        {
+            var bitmap = BitmapHelper.GetOfScale(Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
+                Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
+                image);
+            _contributionListingAdapter.AddPicture(contributionId, bitmap);
+        }
     }
 }

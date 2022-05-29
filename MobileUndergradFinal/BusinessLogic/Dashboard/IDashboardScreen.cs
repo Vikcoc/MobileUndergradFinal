@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using Communication.SourceContributionDto;
 
 namespace BusinessLogic.Dashboard
 {
@@ -13,5 +16,8 @@ namespace BusinessLogic.Dashboard
 
         string Welcome { set; }
         string WelcomeText { get; }
+
+        List<WaterSourceContributionWithPlaceDto> WaterContributions { set; }
+        void AddContributionPicture(Guid contributionId, Stream image);
     }
 }

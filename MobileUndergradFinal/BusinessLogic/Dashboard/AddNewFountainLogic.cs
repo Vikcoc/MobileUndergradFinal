@@ -37,7 +37,7 @@ namespace BusinessLogic.Dashboard
                 {
                     _addNewFountainScreen.SetWaterSourceVariants(res.Data);
                     foreach (var variantDto in res.Data)
-                        await GetPictureForVariant(variantDto.Id);
+                        await GetPictureForVariantAsync(variantDto.Id, variantDto.Picture.Value);
                     break;
                 }
                 case ErrorType.Actionable:
@@ -56,9 +56,9 @@ namespace BusinessLogic.Dashboard
             }
         }
 
-        private async Task GetPictureForVariant(Guid variantId)
+        private async Task GetPictureForVariantAsync(Guid variantId, Guid pictureId)
         {
-            var res = await _networkService.GetAsync<Stream>(RequestPaths.Picture + variantId);
+            var res = await _networkService.GetAsync<Stream>(RequestPaths.Picture + pictureId);
             switch (res.ErrorType)
             {
                 case ErrorType.None:

@@ -1,7 +1,10 @@
 ﻿using Network;
 using Network.Response;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using Communication.SourceContributionDto;
 
 namespace BusinessLogic.Dashboard
 {
@@ -17,10 +20,10 @@ namespace BusinessLogic.Dashboard
 
             _dashboardScreen.OnAddNewFountainPress = _dashboardScreen.MoveToAddNewFountain;
             _dashboardScreen.OnSignOutPress = _dashboardScreen.SignOutAndMoveToLogin;
-            _dashboardScreen.OnScreenVisible = LoadScreen;
+            _dashboardScreen.OnScreenVisible = LoadScreenAsync;
         }
 
-        public async Task LoadScreen()
+        public async Task LoadScreenAsync()
         {
             _networkService.BearerToken = _dashboardScreen.AccessToken;
             var res = await _networkService.GetAsync<string>(RequestPaths.UserName);
@@ -39,6 +42,60 @@ namespace BusinessLogic.Dashboard
                         return;
                     }
 
+                    _dashboardScreen.DisplayError(res.Error);
+                    break;
+                case ErrorType.NonActionable:
+                    _dashboardScreen.DisplayError(res.Error);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            var res2 = await _networkService.GetAsync<List<WaterSourceContributionWithPlaceDto>>(RequestPaths.MyContributions + "0/5");
+            switch (res2.ErrorType)
+            {
+                case ErrorType.None:
+                {
+                    _dashboardScreen.WaterContributions = res2.Data;
+                    foreach (var dto in res2.Data)
+                    {
+                        await GetImageForContributionASync(dto.Id, dto.WaterSourcePlace.Picture);
+                    }
+                    break;
+                }
+                case ErrorType.Actionable:
+                    if (res2.Error == ErrorStrings.Unauthorized)
+                    {
+                        _dashboardScreen.SignOutAndMoveToLogin();
+                        return;
+                    }
+
+                    _dashboardScreen.DisplayError(res2.Error);
+                    break;
+                case ErrorType.NonActionable:
+                    _dashboardScreen.DisplayError(res2.Error);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private async Task GetImageForContributionASync(Guid contributionId, Guid imageId)
+        {
+            var res = await _networkService.GetAsync<Stream>(RequestPaths.Picture + imageId);
+            switch (res.ErrorType)
+            {
+                case ErrorType.None:
+                {
+                    _dashboardScreen.AddContributionPicture(contributionId, res.Data);
+                    break;
+                }
+                case ErrorType.Actionable:
+                    if (res.Error == ErrorStrings.Unauthorized)
+                    {
+                        _dashboardScreen.SignOutAndMoveToLogin();
+                        return;
+                    }
                     _dashboardScreen.DisplayError(res.Error);
                     break;
                 case ErrorType.NonActionable:
