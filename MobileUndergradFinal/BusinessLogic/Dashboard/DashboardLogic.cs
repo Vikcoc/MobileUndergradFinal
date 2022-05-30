@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Communication.SourceContributionDto;
+using Communication.SourcePlaceDto;
 
 namespace BusinessLogic.Dashboard
 {
@@ -51,16 +52,44 @@ namespace BusinessLogic.Dashboard
                     throw new ArgumentOutOfRangeException();
             }
 
-            var res2 = await _networkService.GetAsync<List<WaterSourceContributionWithPlaceDto>>(RequestPaths.MyContributions + "0/5");
+            var res3 = await _networkService.GetAsync<List<WaterSourceContributionWithPlaceDto>>(RequestPaths.MyContributions + "0/5");
+            switch (res3.ErrorType)
+            {
+                case ErrorType.None:
+                {
+                    _dashboardScreen.WaterContributions = res3.Data;
+                    foreach (var dto in res3.Data)
+                        await GetImageForContributionAsync(dto.Id, dto.WaterSourcePlace.Picture);
+                    break;
+                }
+                case ErrorType.Actionable:
+                    if (res3.Error == ErrorStrings.Unauthorized)
+                    {
+                        _dashboardScreen.SignOutAndMoveToLogin();
+                        return;
+                    }
+
+                    _dashboardScreen.DisplayError(res3.Error);
+                    break;
+                case ErrorType.NonActionable:
+                    _dashboardScreen.DisplayError(res3.Error);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public async Task GetPlacesAroundMap()
+        {
+            var res2 = await _networkService.GetAsync<List<WaterSourcePlaceListingWithContributionDto>>
+                (RequestPaths.AroundMe + _dashboardScreen.MapLeft + "/" + _dashboardScreen.MapBot + "/" + _dashboardScreen.MapRight + "/" + _dashboardScreen.MapTop);
             switch (res2.ErrorType)
             {
                 case ErrorType.None:
                 {
-                    _dashboardScreen.WaterContributions = res2.Data;
+                    _dashboardScreen.WaterPlaces = res2.Data;
                     foreach (var dto in res2.Data)
-                    {
-                        await GetImageForContributionASync(dto.Id, dto.WaterSourcePlace.Picture);
-                    }
+                        await GetImageForPlaceAsync(dto.Id, dto.Picture);
                     break;
                 }
                 case ErrorType.Actionable:
@@ -80,7 +109,33 @@ namespace BusinessLogic.Dashboard
             }
         }
 
-        private async Task GetImageForContributionASync(Guid contributionId, Guid imageId)
+        private async Task GetImageForPlaceAsync(Guid placeId, Guid imageId)
+        {
+            var res = await _networkService.GetAsync<Stream>(RequestPaths.Picture + imageId);
+            switch (res.ErrorType)
+            {
+                case ErrorType.None:
+                {
+                    _dashboardScreen.AddPlacePicture(placeId, res.Data);
+                    break;
+                }
+                case ErrorType.Actionable:
+                    if (res.Error == ErrorStrings.Unauthorized)
+                    {
+                        _dashboardScreen.SignOutAndMoveToLogin();
+                        return;
+                    }
+                    _dashboardScreen.DisplayError(res.Error);
+                    break;
+                case ErrorType.NonActionable:
+                    _dashboardScreen.DisplayError(res.Error);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private async Task GetImageForContributionAsync(Guid contributionId, Guid imageId)
         {
             var res = await _networkService.GetAsync<Stream>(RequestPaths.Picture + imageId);
             switch (res.ErrorType)

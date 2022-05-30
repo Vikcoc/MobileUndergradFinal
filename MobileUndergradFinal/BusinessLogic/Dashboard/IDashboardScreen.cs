@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Communication.SourceContributionDto;
+using Communication.SourcePlaceDto;
 
 namespace BusinessLogic.Dashboard
 {
@@ -19,5 +20,12 @@ namespace BusinessLogic.Dashboard
 
         List<WaterSourceContributionWithPlaceDto> WaterContributions { set; }
         void AddContributionPicture(Guid contributionId, Stream image);
+        decimal MapLeft { get; }
+        decimal MapBot { get; }
+        decimal MapRight { get; }
+        decimal MapTop { get; }
+
+        List<WaterSourcePlaceListingWithContributionDto> WaterPlaces { set; }
+        void AddPlacePicture(Guid placeId, Stream image);
     }
 }

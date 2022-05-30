@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using Communication.SourceContributionDto;
+using System;
 
-namespace Communication.SourceContributionDto
+namespace MobileUndergradFinal.AdapterDto
 {
-    public class WaterSourceContributionDto
+    public class WaterSourceContribution
     {
         public Guid Id { get; set; }
         public Guid WaterUserId { get; set; }

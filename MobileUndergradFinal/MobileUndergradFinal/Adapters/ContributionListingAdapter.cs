@@ -12,7 +12,7 @@ namespace MobileUndergradFinal.Adapters
 {
     public class ContributionListingAdapter : RecyclerView.Adapter
     {
-        readonly List<WaterSourceContributionWithPlace> _contributions;
+        private readonly List<WaterSourceContributionWithPlace> _contributions;
 
         public ContributionListingAdapter()
         {

@@ -11,21 +11,29 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Android.Gms.Location;
+using Android.Gms.Maps;
+using Android.Gms.Maps.Model;
 using Communication.SourceContributionDto;
+using Communication.SourcePlaceDto;
 using MobileUndergradFinal.AdapterDto;
 using MobileUndergradFinal.Helper;
 
 namespace MobileUndergradFinal.Activities
 {
     [Activity(Label = "DashboardActivity", ScreenOrientation = ScreenOrientation.Portrait)]
-    public class DashboardActivity : TokenAndErrorActivity, IDashboardScreen
+    public class DashboardActivity : TokenAndErrorActivity, IDashboardScreen, IOnMapReadyCallback
     {
 
         private readonly DashboardLogic _dashboard;
 
         private TextView _welcome;
 
+        private FountainsAdapter _fountainsAdapter;
         private ContributionListingAdapter _contributionListingAdapter;
+
+        private GoogleMap _map;
+
         public DashboardActivity()
         {
             _dashboard = new DashboardLogic(this);
@@ -37,9 +45,13 @@ namespace MobileUndergradFinal.Activities
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.dashboard);
 
+            var mapFragment = (SupportMapFragment)SupportFragmentManager.FindFragmentById(Resource.Id.map);
+            mapFragment.GetMapAsync(this);
+
             var nearYou = FindViewById<RecyclerView>(Resource.Id.nearYou);
             nearYou.SetLayoutManager(new LinearLayoutManager(this));
-            nearYou.SetAdapter(new FountainsAdapter());
+            _fountainsAdapter = new FountainsAdapter();
+            nearYou.SetAdapter(_fountainsAdapter);
             nearYou.AddItemDecoration(new FountainsDecorator(Resources.GetDimensionPixelOffset(Resource.Dimension.margin_small)));
 
             var yourContributions = FindViewById<RecyclerView>(Resource.Id.yourContributions);
@@ -111,6 +123,69 @@ namespace MobileUndergradFinal.Activities
                 Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
                 image);
             _contributionListingAdapter.AddPicture(contributionId, bitmap);
+        }
+
+        public decimal MapLeft => Convert.ToDecimal(_map.Projection.VisibleRegion.LatLngBounds.Southwest.Longitude);
+        public decimal MapBot => Convert.ToDecimal(_map.Projection.VisibleRegion.LatLngBounds.Southwest.Latitude);
+        public decimal MapRight => Convert.ToDecimal(_map.Projection.VisibleRegion.LatLngBounds.Northeast.Longitude);
+        public decimal MapTop => Convert.ToDecimal(_map.Projection.VisibleRegion.LatLngBounds.Northeast.Latitude);
+
+        public List<WaterSourcePlaceListingWithContributionDto> WaterPlaces
+        {
+            set
+            {
+                _fountainsAdapter.AddItems(value.Select(x => new WaterSourcePlaceListingWithContribution
+                {
+                    Id = x.Id,
+                    Latitude = x.Latitude,
+                    Address = x.Address,
+                    Contribution = new WaterSourceContribution
+                    {
+                        Id = x.Contribution.Id,
+                        WaterSourcePlaceId = x.Contribution.WaterSourcePlaceId,
+                        ContributionType = x.Contribution.ContributionType,
+                        Details = x.Contribution.Details,
+                        RelatedContributionId = x.Contribution.RelatedContributionId,
+                        WaterUserId = x.Contribution.WaterUserId,
+                    },
+                    Longitude = x.Longitude,
+                    Nickname = x.Nickname,
+
+                }).ToList());
+
+                foreach (var fountainPosition in value.Select(dto => new LatLng(Convert.ToDouble(dto.Latitude), Convert.ToDouble(dto.Longitude))))
+                {
+                    _map.AddMarker(new MarkerOptions()
+                        .SetPosition(fountainPosition)
+                        .SetTitle("Selected position"));
+                }
+            }
+        }
+        public void AddPlacePicture(Guid placeId, Stream image)
+        {
+            var bitmap = BitmapHelper.GetOfScale(Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
+                Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
+                image);
+            _fountainsAdapter.AddPicture(placeId, bitmap);
+        }
+
+        public async void OnMapReady(GoogleMap map)
+        {
+            _map = map;
+
+            _map.UiSettings.MyLocationButtonEnabled = false;
+
+            if (this.CheckSelfPermission(Android.Manifest.Permission.AccessFineLocation) == (int)Permission.Granted && this.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) == (int)Permission.Granted)
+            {
+                map.MyLocationEnabled = true;
+
+                var locationProvider = LocationServices.GetFusedLocationProviderClient(this);
+                var x = await locationProvider.GetLastLocationAsync();
+
+                map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(new LatLng(x.Latitude, x.Longitude), 15));
+            }
+
+            await _dashboard.GetPlacesAroundMap();
         }
     }
 }
