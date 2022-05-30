@@ -11,6 +11,7 @@ using Android.Widget;
 using Google.Android.Material.Snackbar;
 using System.Collections.Generic;
 using System.Linq;
+using Google.Android.Material.FloatingActionButton;
 
 namespace MobileUndergradFinal.Activities
 {
@@ -27,7 +28,7 @@ namespace MobileUndergradFinal.Activities
             var mapFragment = (SupportMapFragment)SupportFragmentManager.FindFragmentById(Resource.Id.map);
             mapFragment.GetMapAsync(this);
 
-            var but = FindViewById<ImageButton>(Resource.Id.currentLoc);
+            var but = FindViewById<FloatingActionButton>(Resource.Id.currentLoc);
             but.Click += async (sender, args) =>
             {
                 if(this.CheckSelfPermission(Android.Manifest.Permission.AccessFineLocation) != (int)Permission.Granted || this.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) != (int)Permission.Granted)
@@ -43,7 +44,7 @@ namespace MobileUndergradFinal.Activities
                 }
             };
 
-            var but2 = FindViewById<ImageButton>(Resource.Id.printLoc);
+            var but2 = FindViewById<FloatingActionButton>(Resource.Id.printLoc);
             but2.Click += async (sender, args) =>
             {
                 var geocode = new Geocoder(this);

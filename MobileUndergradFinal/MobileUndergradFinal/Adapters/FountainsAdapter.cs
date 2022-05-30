@@ -29,7 +29,7 @@ namespace MobileUndergradFinal.Adapters
             switch (_places[position].Contribution.ContributionType)
             {
                 case ContributionTypeDto.Creation:
-                    holder.ItemView.FindViewById<ImageView>(Resource.Id.contributionPicture).SetImageResource(Resource.Drawable.water_fountain);
+                    holder.ItemView.FindViewById<ImageView>(Resource.Id.contributionPicture).SetImageResource(Resource.Drawable.water_fountain_on_surface);
                     break;
                 case ContributionTypeDto.CreateIncident:
                     holder.ItemView.FindViewById<ImageView>(Resource.Id.contributionPicture).SetImageResource(Resource.Drawable.water_fountain_warn);

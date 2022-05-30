@@ -1,5 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+	<fragment
+		android:id="@+id/map"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:name="com.google.android.gms.maps.SupportMapFragment"
+		map:cameraTargetLat="44.430449699320036"
+		map:cameraTargetLng="26.103905629824"
+		map:cameraZoom="15.0"
+		map:uiZoomGestures="true"
+		map:uiScrollGestures="true"
+		map:uiRotateGestures="true"
+		map:uiTiltGestures ="true"/>
+
+	<androidx.appcompat.widget.SearchView
+		android:id="@+id/idSearchView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="10dp"
+		android:background="?attr/colorSurface"
+		android:elevation="5dp"
+		app:iconifiedByDefault="false"
+		app:queryHint="Search Here"
+		android:layout_gravity="top"/>
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/currentLoc"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="16dp"
+		android:layout_marginBottom="16dp"
+		android:clickable="true"
+		android:src="@drawable/locate"
+		android:layout_gravity="bottom | end"
+		/>
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/printLoc"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:translationY="-16dp"
+		android:clickable="true"
+		android:src="@drawable/submit"
+		app:layout_anchor="@id/currentLoc"
+		app:layout_anchorGravity="top | end"
+		android:layout_gravity="top"/>
+
+    <View
+		android:id="@+id/centerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"/>
+
+	<ImageView
+		android:id="@+id/pin"
+		android:layout_width="30dp"
+		android:layout_height="60dp"
+		android:layout_gravity="top | center"
+		android:src="@drawable/center_pin"
+		android:contentDescription="@string/placeholder" 
+		app:layout_anchor="@+id/centerView"
+		app:layout_anchorGravity="top | center"
+	/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+<!--<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -79,4 +151,4 @@
         android:contentDescription="@string/placeholder" 
 	/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>-->

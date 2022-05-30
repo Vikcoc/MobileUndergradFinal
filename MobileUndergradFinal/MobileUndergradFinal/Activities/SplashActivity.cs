@@ -31,7 +31,7 @@ namespace MobileUndergradFinal.Activities
 
         public void MoveToDashboard()
         {
-            StartActivity(new Intent(this, typeof(FountainsOnMapActivity)));
+            StartActivity(new Intent(this, typeof(DashboardActivity)));
         }
 
         public void MoveToLogin()
