@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+	<fragment
+		android:id="@+id/map"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:name="com.google.android.gms.maps.SupportMapFragment"
+		map:cameraTargetLat="44.430449699320036"
+		map:cameraTargetLng="26.103905629824"
+		map:cameraZoom="15.0"
+		map:uiZoomGestures="true"
+		map:uiScrollGestures="true"
+		map:uiRotateGestures="true"
+		map:uiTiltGestures ="true"/>
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/fab_locate"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginEnd="16dp"
+		android:translationY="-16dp"
+		android:clickable="true"
+		app:layout_anchor="@id/standard_bottom_sheet"
+		app:layout_anchorGravity="top | end"
+		android:src="@drawable/locate"
+		android:layout_gravity="top"
+		/>
+
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/fab_test"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:translationY="-16dp"
+		android:clickable="true"
+		android:src="@drawable/submit"
+		app:layout_anchor="@id/fab_locate"
+		app:layout_anchorGravity="top | end"
+		android:layout_gravity="top"/>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="400dp"
+		android:background="#00FF00"
+		android:id="@+id/standard_bottom_sheet"
+		android:orientation="vertical"
+		app:behavior_hideable="false"
+		app:behavior_peekHeight="62dp"
+		app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+		<!-- Bottom sheet contents. -->
+
+	</FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

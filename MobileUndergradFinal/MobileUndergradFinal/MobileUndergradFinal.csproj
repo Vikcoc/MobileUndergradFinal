@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activities\AddNewPlaceActivity.cs" />
+    <Compile Include="Activities\FountainsOnMapActivity.cs" />
     <Compile Include="Activities\TokenAndErrorActivity.cs" />
     <Compile Include="AdapterDto\WaterSourceContribution.cs" />
     <Compile Include="AdapterDto\WaterSourceContributionWithPlace.cs" />
@@ -245,6 +246,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\error_outline.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\map_with_fountains.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
