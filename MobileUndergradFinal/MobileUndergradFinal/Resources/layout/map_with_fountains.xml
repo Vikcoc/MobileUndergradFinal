@@ -26,35 +26,21 @@
 		android:layout_marginEnd="16dp"
 		android:translationY="-16dp"
 		android:clickable="true"
-		app:layout_anchor="@id/standard_bottom_sheet"
+		app:layout_anchor="@id/standardBottomSheet"
 		app:layout_anchorGravity="top | end"
 		android:src="@drawable/locate"
 		android:layout_gravity="top"
 		/>
 
-	<com.google.android.material.floatingactionbutton.FloatingActionButton
-		android:id="@+id/fab_test"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:translationY="-16dp"
-		android:clickable="true"
-		android:src="@drawable/submit"
-		app:layout_anchor="@id/fab_locate"
-		app:layout_anchorGravity="top | end"
-		android:layout_gravity="top"/>
-
-	<FrameLayout
-		android:layout_width="match_parent"
-		android:layout_height="400dp"
-		android:background="#00FF00"
-		android:id="@+id/standard_bottom_sheet"
-		android:orientation="vertical"
-		app:behavior_hideable="false"
-		app:behavior_peekHeight="62dp"
-		app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-		<!-- Bottom sheet contents. -->
-
-	</FrameLayout>
+	<include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="400dp"
+		layout="@layout/place_on_map_sheet"
+        android:id="@+id/standardBottomSheet"
+        android:orientation="vertical"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="60dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

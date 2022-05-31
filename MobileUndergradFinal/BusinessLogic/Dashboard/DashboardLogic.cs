@@ -22,6 +22,9 @@ namespace BusinessLogic.Dashboard
             _dashboardScreen.OnAddNewFountainPress = _dashboardScreen.MoveToAddNewFountain;
             _dashboardScreen.OnSignOutPress = _dashboardScreen.SignOutAndMoveToLogin;
             _dashboardScreen.OnScreenVisible = LoadScreenAsync;
+            _dashboardScreen.OnMapPress = () => _dashboardScreen.MoveToMap();
+            _dashboardScreen.OnSeeAllPlacesPress = () => _dashboardScreen.MoveToMap();
+            _dashboardScreen.OnPlaceSelected = x => _dashboardScreen.MoveToMap(x);
         }
 
         public async Task LoadScreenAsync()
@@ -82,7 +85,7 @@ namespace BusinessLogic.Dashboard
         public async Task GetPlacesAroundMap()
         {
             var res2 = await _networkService.GetAsync<List<WaterSourcePlaceListingWithContributionDto>>
-                (RequestPaths.AroundMe + _dashboardScreen.MapLeft + "/" + _dashboardScreen.MapBot + "/" + _dashboardScreen.MapRight + "/" + _dashboardScreen.MapTop);
+                (RequestPaths.AroundMeWithState + _dashboardScreen.MapLeft + "/" + _dashboardScreen.MapBot + "/" + _dashboardScreen.MapRight + "/" + _dashboardScreen.MapTop);
             switch (res2.ErrorType)
             {
                 case ErrorType.None:

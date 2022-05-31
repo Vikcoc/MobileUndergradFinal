@@ -13,6 +13,9 @@ namespace Network
         public const string Picture = "Media/";
         public const string AddPlace = "WaterSourcePlace";
         public const string MyContributions = "WaterSourceContribution/mine/";
+        public const string AroundMeWithState = "WaterSourcePlace/get_in_rectangle_with_state/";
         public const string AroundMe = "WaterSourcePlace/get_in_rectangle/";
+        public const string Place = "WaterSourcePlace/";
+        public const string ContributionsOfPlace = "WaterSourceContribution/of_place/";
     }
 }

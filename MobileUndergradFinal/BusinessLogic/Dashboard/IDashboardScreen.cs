@@ -27,5 +27,9 @@ namespace BusinessLogic.Dashboard
 
         List<WaterSourcePlaceListingWithContributionDto> WaterPlaces { set; }
         void AddPlacePicture(Guid placeId, Stream image);
+        void MoveToMap(Guid? placeId = null);
+        Action OnMapPress { get; set; }
+        Action OnSeeAllPlacesPress { get; set; }
+        Action<Guid> OnPlaceSelected { get; set; }
     }
 }

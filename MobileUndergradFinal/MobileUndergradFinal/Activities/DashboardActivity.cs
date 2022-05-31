@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Android.Content;
 using Android.Gms.Location;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
@@ -50,7 +51,7 @@ namespace MobileUndergradFinal.Activities
 
             var nearYou = FindViewById<RecyclerView>(Resource.Id.nearYou);
             nearYou.SetLayoutManager(new LinearLayoutManager(this));
-            _fountainsAdapter = new FountainsAdapter();
+            _fountainsAdapter = new FountainsAdapter(OnPlaceSelected);
             nearYou.SetAdapter(_fountainsAdapter);
             nearYou.AddItemDecoration(new FountainsDecorator(Resources.GetDimensionPixelOffset(Resource.Dimension.margin_small)));
 
@@ -62,6 +63,10 @@ namespace MobileUndergradFinal.Activities
 
             var addNew = FindViewById<Button>(Resource.Id.addNew);
             addNew.Click += (sender, args) => OnAddNewFountainPress?.Invoke();
+
+
+            var seeAll = FindViewById<Button>(Resource.Id.seeAll);
+            seeAll.Click += (sender, args) => OnSeeAllPlacesPress?.Invoke();
 
             var view = FindViewById(Resource.Id.signOut);
             view.Click += (sender, args) => OnSignOutPress?.Invoke();
@@ -134,7 +139,7 @@ namespace MobileUndergradFinal.Activities
         {
             set
             {
-                _fountainsAdapter.AddItems(value.Select(x => new WaterSourcePlaceListingWithContribution
+                _fountainsAdapter.AddItems(value.Take(5).Select(x => new WaterSourcePlaceListingWithContribution
                 {
                     Id = x.Id,
                     Latitude = x.Latitude,
@@ -153,11 +158,11 @@ namespace MobileUndergradFinal.Activities
 
                 }).ToList());
 
-                foreach (var fountainPosition in value.Select(dto => new LatLng(Convert.ToDouble(dto.Latitude), Convert.ToDouble(dto.Longitude))))
+                foreach (var dto in value)
                 {
                     _map.AddMarker(new MarkerOptions()
-                        .SetPosition(fountainPosition)
-                        .SetTitle("Selected position"));
+                        .SetPosition(new LatLng(Convert.ToDouble(dto.Latitude), Convert.ToDouble(dto.Longitude)))
+                        .SetTitle(dto.Nickname));
                 }
             }
         }
@@ -185,7 +190,29 @@ namespace MobileUndergradFinal.Activities
                 map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(new LatLng(x.Latitude, x.Longitude), 15));
             }
 
+            _map.MapClick += (sender, args) =>
+            {
+                OnMapPress?.Invoke();
+            };
+
+            _map.MarkerClick += (sender, args) =>
+            {
+                OnMapPress?.Invoke();
+            };
+
             await _dashboard.GetPlacesAroundMap();
         }
+
+        public void MoveToMap(Guid? placeId = null)
+        {
+            var intent = new Intent(this, typeof(FountainsOnMapActivity));
+            if (placeId.HasValue)
+                intent.PutExtra("placeId", placeId.Value.ToString());
+            StartActivity(intent);
+        }
+
+        public Action OnMapPress { get; set; }
+        public Action OnSeeAllPlacesPress { get; set; }
+        public Action<Guid> OnPlaceSelected { get; set; }
     }
 }

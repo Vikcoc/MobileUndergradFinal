@@ -13,9 +13,11 @@ namespace MobileUndergradFinal.Adapters
     public class FountainsAdapter : RecyclerView.Adapter
     {
         private readonly List<WaterSourcePlaceListingWithContribution> _places;
+        private readonly Action<Guid> _selectedPlace;
 
-        public FountainsAdapter()
+        public FountainsAdapter(Action<Guid> selectedPlace)
         {
+            _selectedPlace = selectedPlace;
             _places = new List<WaterSourcePlaceListingWithContribution>();
         }
 
@@ -61,7 +63,9 @@ namespace MobileUndergradFinal.Adapters
                 case 0:
                     {
                         var view = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.contribution_short_layout, parent, false);
-                        return new CustomViewHolder(view);
+                        var holder = new CustomViewHolder(view);
+                        view.Click += (sender, args) => _selectedPlace.Invoke(_places[holder.AbsoluteAdapterPosition].Id);
+                        return holder;
                     }
                 default:
                     {

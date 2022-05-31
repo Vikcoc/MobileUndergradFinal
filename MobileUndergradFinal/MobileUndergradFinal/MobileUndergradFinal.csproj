@@ -72,6 +72,7 @@
     <Compile Include="AdapterDto\WaterSourcePlaceListingWithContribution.cs" />
     <Compile Include="AdapterDto\WaterSourceVariant.cs" />
     <Compile Include="Adapters\ContributionListingAdapter.cs" />
+    <Compile Include="Adapters\ContributionOfPlaceAdapter.cs" />
     <Compile Include="Adapters\FountainsTypeAdapter.cs" />
     <Compile Include="Adapters\FountainsAdapter.cs" />
     <Compile Include="Adapters\PlacePictureAdapter.cs" />
@@ -257,6 +258,11 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\water_fountain_on_surface.xml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\place_on_map_sheet.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
