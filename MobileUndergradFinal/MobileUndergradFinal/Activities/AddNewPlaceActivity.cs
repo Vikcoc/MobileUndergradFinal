@@ -8,6 +8,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Provider;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
 using AndroidX.Core.App;
 using AndroidX.Core.Content;
@@ -25,8 +26,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Android.Graphics.Drawables;
-using Android.Views.InputMethods;
 using Environment = Android.OS.Environment;
 using File = Java.IO.File;
 using Uri = Android.Net.Uri;
@@ -379,12 +378,6 @@ namespace MobileUndergradFinal.Activities
 
         private List<Intent> GetCameraIntents()
         {
-            //var SD_CARD_TEMP_DIR = Environment.ExternalStorageDirectory + Java.IO.File.Separator + DateTime.Now.ToString("hh_mm_ss") + ".jpg"; // Get File Path
-            //var takePictureFromCameraIntent = new Intent(Android.Provider.MediaStore.ActionImageCapture);
-            //takePictureFromCameraIntent.PutExtra(MediaStore.ExtraOutput, Uri.FromFile(new File(SD_CARD_TEMP_DIR)));
-            //StartActivityForResult(takePictureFromCameraIntent, 123);
-            //return new List<Intent> { takePictureFromCameraIntent };
-
             var file = new File(this.GetExternalFilesDir(Environment.DirectoryPictures), $"capture_{System.Guid.NewGuid().ToString().Substring(0, 5)}.jpg");
             var photoURI = FileProvider.GetUriForFile(this, this.PackageName + ".fileprovider", file);
             _photoURI = photoURI;

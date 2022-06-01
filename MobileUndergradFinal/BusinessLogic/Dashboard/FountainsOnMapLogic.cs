@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Communication.SourceContributionDto;
+﻿using Communication.SourceContributionDto;
 using Communication.SourcePlaceDto;
 using Network;
 using Network.Response;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace BusinessLogic.Dashboard
 {
@@ -24,8 +23,23 @@ namespace BusinessLogic.Dashboard
         public async Task GetPlacesAroundMap()
         {
             _networkService.BearerToken = _screen.AccessToken;
+            decimal mapLeft, mapBot, mapRight, mapTop;
+            if (_screen.MapLeft == 0 && _screen.MapBot == 0 && _screen.MapRight == 0 && _screen.MapTop == 0)
+            {
+                mapLeft = 25.940406036769225M;
+                mapBot = 44.353416170044575M;
+                mapRight = 26.22968228764095M;
+                mapTop = 44.54220245174628M;
+            }
+            else
+            {
+                mapLeft = _screen.MapLeft;
+                mapBot = _screen.MapBot;
+                mapRight = _screen.MapRight;
+                mapTop = _screen.MapTop;
+            }
             var res2 = await _networkService.GetAsync<List<WaterSourcePlaceListingDto>>
-                (RequestPaths.AroundMe + _screen.MapLeft + "/" + _screen.MapBot + "/" + _screen.MapRight + "/" + _screen.MapTop);
+                (RequestPaths.AroundMe + mapLeft + "/" + mapBot + "/" + mapRight + "/" + mapTop);
             switch (res2.ErrorType)
             {
                 case ErrorType.None:
@@ -128,6 +142,35 @@ namespace BusinessLogic.Dashboard
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public async Task AddRightContributionAsync(ContributionTypeDto current, string comment, Guid placeId)
+        {
+            var res = await _networkService.PostAsync<WaterSourceContributionDto>(RequestPaths.Contribution,
+                new WaterSourceContributionCreateDto
+                {
+                    ContributionType = current switch
+                    {
+                        ContributionTypeDto.Creation => ContributionTypeDto.CreateIncident,
+                        ContributionTypeDto.CreateIncident => ContributionTypeDto.ConfirmIncident,
+                        ContributionTypeDto.ConfirmIncident => ContributionTypeDto.InfirmIncident,
+                        ContributionTypeDto.InfirmIncident => ContributionTypeDto.RemoveIncident,
+                        ContributionTypeDto.RemoveIncident => ContributionTypeDto.CreateIncident,
+                    },
+                    Details = comment,
+                    WaterSourcePlaceId = placeId,
+                });
+        }
+
+        public async Task AddLeftContributionAsync(string comment, Guid placeId)
+        {
+            var res = await _networkService.PostAsync<WaterSourceContributionDto>(RequestPaths.Contribution,
+                new WaterSourceContributionCreateDto
+                {
+                    ContributionType = ContributionTypeDto.InfirmIncident,
+                    Details = comment,
+                    WaterSourcePlaceId = placeId,
+                });
         }
     }
 }

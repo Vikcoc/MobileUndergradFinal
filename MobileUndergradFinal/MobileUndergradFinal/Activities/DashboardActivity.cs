@@ -1,24 +1,24 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
+using Android.Gms.Location;
+using Android.Gms.Maps;
+using Android.Gms.Maps.Model;
 using Android.OS;
 using Android.Widget;
 using AndroidX.RecyclerView.Widget;
 using BusinessLogic.Dashboard;
+using Communication.SourceContributionDto;
+using Communication.SourcePlaceDto;
+using MobileUndergradFinal.AdapterDto;
 using MobileUndergradFinal.Adapters;
+using MobileUndergradFinal.Helper;
 using MobileUndergradFinal.ItemDecorators;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Android.Content;
-using Android.Gms.Location;
-using Android.Gms.Maps;
-using Android.Gms.Maps.Model;
-using Communication.SourceContributionDto;
-using Communication.SourcePlaceDto;
-using MobileUndergradFinal.AdapterDto;
-using MobileUndergradFinal.Helper;
 
 namespace MobileUndergradFinal.Activities
 {
@@ -105,7 +105,6 @@ namespace MobileUndergradFinal.Activities
                     WaterSourcePlaceId = x.WaterSourcePlaceId,
                     WaterSourcePlace = new WaterSourcePlaceListing
                     {
-                        //Picture = x.WaterSourcePlace.,
                         Nickname = x.WaterSourcePlace.Nickname,
                         Latitude = x.WaterSourcePlace.Latitude,
                         Address = x.WaterSourcePlace.Address,

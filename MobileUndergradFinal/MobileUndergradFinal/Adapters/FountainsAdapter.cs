@@ -27,7 +27,7 @@ namespace MobileUndergradFinal.Adapters
                 return;
             holder.ItemView.FindViewById<TextView>(Resource.Id.topText).Text = _places[position].Nickname;
             holder.ItemView.FindViewById<TextView>(Resource.Id.bottomText).Text = _places[position].Address;
-            holder.ItemView.FindViewById<TextView>(Resource.Id.contributionType).Text = _places[position].ToString();
+            holder.ItemView.FindViewById<TextView>(Resource.Id.contributionType).Text = _places[position].Contribution.ContributionType.ToString();
             switch (_places[position].Contribution.ContributionType)
             {
                 case ContributionTypeDto.Creation:

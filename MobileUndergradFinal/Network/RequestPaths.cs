@@ -17,5 +17,6 @@ namespace Network
         public const string AroundMe = "WaterSourcePlace/get_in_rectangle/";
         public const string Place = "WaterSourcePlace/";
         public const string ContributionsOfPlace = "WaterSourceContribution/of_place/";
+        public const string Contribution = "WaterSourceContribution";
     }
 }

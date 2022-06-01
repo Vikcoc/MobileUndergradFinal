@@ -5,6 +5,7 @@ using Communication.SourceContributionDto;
 using MobileUndergradFinal.Helper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MobileUndergradFinal.Adapters
 {
@@ -79,6 +80,11 @@ namespace MobileUndergradFinal.Adapters
             _places.Clear();
             _places.AddRange(items);
             NotifyDataSetChanged();
+        }
+
+        public ContributionTypeDto GetLastType()
+        {
+            return _places.First(x => x.ContributionType != ContributionTypeDto.Update).ContributionType;
         }
     }
 }

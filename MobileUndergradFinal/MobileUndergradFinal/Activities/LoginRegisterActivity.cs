@@ -2,7 +2,6 @@
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
-using AndroidX.AppCompat.App;
 using AndroidX.Lifecycle;
 using MobileUndergradFinal.Fragments;
 using MobileUndergradFinal.Fragments.NoAccount;

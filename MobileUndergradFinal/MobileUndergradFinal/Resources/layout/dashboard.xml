@@ -147,14 +147,6 @@
 	                android:layout_height="wrap_content"
 	                android:overScrollMode="never"/>
 
-
-                <Button
-                    android:layout_marginVertical="@dimen/margin_small"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="@string/dashboard_see_all"
-                    android:backgroundTint="?attr/colorPrimaryVariant"/>
-
             </LinearLayout>
 
             <Button

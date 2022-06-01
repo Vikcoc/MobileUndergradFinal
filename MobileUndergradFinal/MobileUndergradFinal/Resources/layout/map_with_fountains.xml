@@ -13,7 +13,7 @@
 		android:name="com.google.android.gms.maps.SupportMapFragment"
 		map:cameraTargetLat="44.430449699320036"
 		map:cameraTargetLng="26.103905629824"
-		map:cameraZoom="15.0"
+		map:cameraZoom="10.0"
 		map:uiZoomGestures="true"
 		map:uiScrollGestures="true"
 		map:uiRotateGestures="true"

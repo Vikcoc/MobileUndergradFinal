@@ -55,4 +55,18 @@
 	<string name="add_place_map_error">"Must have a place"</string>
 	<string name="add_place_variant_error">"Must be of a kind"</string>
 	<string name="add_place_pictures_error">"Must have pictures"</string>
+
+	<!--Places on map-->
+	<string name="on_map_modify">"Modify"</string>
+	<string name="on_map_specify_details">"Specify details"</string>
+	<string name="on_map_specify_create_incident">"Create incident"</string>
+	<string name="on_map_specify_infirm_incident">"Infirm incident"</string>
+	<string name="on_map_specify_confirm_incident">"Confirm incident"</string>
+	<string name="on_map_specify_remove_incident">"Remove incident"</string>
+
+	<!--Map-->
+	<string name="map_address_error">"Error: What you're looking at not found"</string>
+	<string name="map_error_begin">"Error: "</string>
+	<string name="map_error_end">" not found"</string>
+	
 </resources>

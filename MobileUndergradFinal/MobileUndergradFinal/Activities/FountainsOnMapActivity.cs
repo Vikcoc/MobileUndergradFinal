@@ -4,6 +4,7 @@ using Android.Gms.Location;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Android.OS;
+using Android.Views;
 using Android.Widget;
 using AndroidX.ConstraintLayout.Widget;
 using AndroidX.CoordinatorLayout.Widget;
@@ -31,6 +32,7 @@ namespace MobileUndergradFinal.Activities
         private readonly FountainsOnMapLogic _logic;
         private Guid? _pinSelected;
         private ConstraintLayout _sheet;
+
 
         public FountainsOnMapActivity()
         {
@@ -69,7 +71,10 @@ namespace MobileUndergradFinal.Activities
                         .SetTitle(dto.Nickname));
                     marker.Tag = dto.Id.ToString();
                     if (_pinSelected.HasValue && _pinSelected.Value == dto.Id)
+                    {
                         MarkerClicked(marker);
+                        _map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(new LatLng(marker.Position.Latitude, marker.Position.Longitude), 15));
+                    }
 
                 }
             }
@@ -95,6 +100,65 @@ namespace MobileUndergradFinal.Activities
             _sheet = FindViewById<ConstraintLayout>(Resource.Id.standardBottomSheet);
             ((_sheet.LayoutParameters as CoordinatorLayout.LayoutParams).Behavior as BottomSheetBehavior).Hideable = true;
             ((_sheet.LayoutParameters as CoordinatorLayout.LayoutParams).Behavior as BottomSheetBehavior).State = BottomSheetBehavior.StateHidden;
+
+
+            
+            
+
+            var button = _sheet.FindViewById<Button>(Resource.Id.button1);
+            button.Click += (sender, args) =>
+            {
+                var builder = new AlertDialog.Builder(this);
+                var view = View.Inflate(this, Resource.Layout.add_contribution_layout, null);
+                var input = view.FindViewById<EditText>(Resource.Id.textInputEditText1);
+                var leftButton = view.FindViewById<Button>(Resource.Id.button1);
+                var rightButton = view.FindViewById<Button>(Resource.Id.button2);
+                var action = _contributionsAdapter.GetLastType();
+
+                rightButton.Click += async (o, eventArgs) =>
+                {
+                    await _logic.AddRightContributionAsync(action, input.Text, _pinSelected.Value);
+                };
+                leftButton.Click += async (o, eventArgs) =>
+                {
+                    await _logic.AddLeftContributionAsync(input.Text, _pinSelected.Value);
+                };
+
+                switch (action)
+                {
+                    case ContributionTypeDto.Creation:
+                        leftButton.Visibility = ViewStates.Invisible;
+                        rightButton.Text = Resources.GetString(Resource.String.on_map_specify_create_incident);
+                        break;
+                    case ContributionTypeDto.CreateIncident:
+                        leftButton.Visibility = ViewStates.Visible;
+                        leftButton.Text = Resources.GetString(Resource.String.on_map_specify_infirm_incident);
+                        rightButton.Text = Resources.GetString(Resource.String.on_map_specify_confirm_incident);
+                        break;
+                    case ContributionTypeDto.ConfirmIncident:
+                        leftButton.Visibility = ViewStates.Invisible;
+                        rightButton.Text = Resources.GetString(Resource.String.on_map_specify_remove_incident);
+                        break;
+                    case ContributionTypeDto.InfirmIncident:
+                        leftButton.Visibility = ViewStates.Invisible;
+                        rightButton.Text = Resources.GetString(Resource.String.on_map_specify_remove_incident);
+                        break;
+                    case ContributionTypeDto.RemoveIncident:
+                        leftButton.Visibility = ViewStates.Invisible;
+                        rightButton.Text = Resources.GetString(Resource.String.on_map_specify_create_incident);
+                        break;
+                }
+                builder.SetView(view);
+                var dialog = builder.Show();
+                rightButton.Click += (o, eventArgs) =>
+                {
+                    dialog.Dismiss();
+                };
+                leftButton.Click += (o, eventArgs) =>
+                {
+                    dialog.Dismiss();
+                };
+            };
 
 
             var recycler = FindViewById<RecyclerView>(Resource.Id.contributions);

@@ -84,8 +84,23 @@ namespace BusinessLogic.Dashboard
 
         public async Task GetPlacesAroundMap()
         {
+            decimal mapLeft, mapBot, mapRight, mapTop;
+            if (_dashboardScreen.MapLeft == 0 && _dashboardScreen.MapBot == 0 && _dashboardScreen.MapRight == 0 && _dashboardScreen.MapTop == 0)
+            {
+                mapLeft = 25.940406036769225M;
+                mapBot = 44.353416170044575M;
+                mapRight = 26.22968228764095M;
+                mapTop = 44.54220245174628M;
+            }
+            else
+            {
+                mapLeft = _dashboardScreen.MapLeft;
+                mapBot = _dashboardScreen.MapBot;
+                mapRight = _dashboardScreen.MapRight;
+                mapTop = _dashboardScreen.MapTop;
+            }
             var res2 = await _networkService.GetAsync<List<WaterSourcePlaceListingWithContributionDto>>
-                (RequestPaths.AroundMeWithState + _dashboardScreen.MapLeft + "/" + _dashboardScreen.MapBot + "/" + _dashboardScreen.MapRight + "/" + _dashboardScreen.MapTop);
+                (RequestPaths.AroundMeWithState + mapLeft + "/" + mapBot + "/" + mapRight + "/" + mapTop);
             switch (res2.ErrorType)
             {
                 case ErrorType.None:

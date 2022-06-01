@@ -7,11 +7,10 @@ using Android.Gms.Maps.Model;
 using Android.Locations;
 using Android.OS;
 using Android.Views;
-using Android.Widget;
+using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Snackbar;
 using System.Collections.Generic;
 using System.Linq;
-using Google.Android.Material.FloatingActionButton;
 
 namespace MobileUndergradFinal.Activities
 {
@@ -53,7 +52,7 @@ namespace MobileUndergradFinal.Activities
 
                 if (addresses == null || !addresses.Any())
                 {
-                    var toast = Snackbar.Make(this, (View)sender, "Error: What you're looking at not found", BaseTransientBottomBar.LengthLong);
+                    var toast = Snackbar.Make(this, (View)sender, Resources.GetString(Resource.String.map_address_error), BaseTransientBottomBar.LengthLong);
                     toast?.Show();
                     return;
                 }
@@ -86,7 +85,9 @@ namespace MobileUndergradFinal.Activities
                 }
                 if (addressList == null || !addressList.Any())
                 {
-                    var toast = Snackbar.Make(this, (View)sender, "Error: " + args.NewText + " not found", BaseTransientBottomBar.LengthLong);
+                    var toast = Snackbar.Make(this, (View)sender,
+                        Resources.GetString(Resource.String.map_error_begin) + args.NewText +
+                        Resources.GetString(Resource.String.map_error_end), BaseTransientBottomBar.LengthLong);
                     toast?.Show();
                     return;
                 }
