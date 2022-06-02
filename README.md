@@ -3,7 +3,7 @@ The mobile repository for my graduation project
 
 It's idea is to be for water sources like waze is for potholes. It's not as good by a large margin.
 
-It consumes an api hosted at: https://github.com/Vikcoc/BackendUndergradFinal
+It consumes an api viewable at: https://github.com/Vikcoc/BackendUndergradFinal
 
 ## Setup:
 There are 2 files missing from git: AndroidManifestDebug.xml and settings-debug.json, both of them have a release counterpart in their respective folder that serves as a template.
