@@ -51,7 +51,7 @@ namespace MobileUndergradFinal.Adapters
                 default:
                 {
                     var view = LayoutInflater.From(parent.Context)
-                        .Inflate(Resource.Layout.contribution_short_layout, parent, false);
+                        .Inflate(Resource.Layout.no_items, parent, false);
                     var holder = new CustomViewHolder(view);
                     return holder;
                 }
