@@ -36,7 +36,25 @@
 		    app:layout_constraintStart_toStartOf="@+id/topBar"
 		    app:layout_constraintTop_toTopOf="parent"
 		    app:layout_constraintVertical_bias="0.5"
-		    app:layout_constraintWidth_percent="0.5" />
+		    app:layout_constraintWidth_percent="0.65" />
+
+	    <com.google.android.material.imageview.ShapeableImageView
+			android:id="@+id/back_button"
+		    android:layout_width="0dp"
+		    android:layout_height="0dp"
+		    app:layout_constraintBottom_toBottomOf="@+id/topBar"
+		    app:layout_constraintEnd_toStartOf="@+id/actionText"
+		    app:layout_constraintStart_toStartOf="@id/nicknameTextLayout"
+		    app:layout_constraintTop_toTopOf="@+id/topBar"
+		    app:layout_constraintWidth_percent="0.1"
+		    app:layout_constraintDimensionRatio="W, 1:1"
+		    app:contentPadding="5dp"
+			app:layout_constraintHorizontal_bias="0.0"
+		    android:src="@drawable/back_arrow"
+		    android:background="@drawable/back_ripple"
+		    app:shapeAppearanceOverlay="@style/ImageRound"
+			android:clickable="true"
+			android:focusable="true"/>
 
 	    <com.google.android.material.textfield.TextInputLayout
 	        android:id="@+id/nicknameTextLayout"

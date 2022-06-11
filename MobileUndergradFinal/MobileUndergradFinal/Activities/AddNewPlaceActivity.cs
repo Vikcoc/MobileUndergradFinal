@@ -171,6 +171,9 @@ namespace MobileUndergradFinal.Activities
             recycler.SetLayoutManager(new GridLayoutManager(this, 3, (int)Orientation.Vertical, false));
             _pictureAdapter = new PlacePictureAdapter();
             recycler.SetAdapter(_pictureAdapter);
+
+            var backButton = FindViewById<View>(Resource.Id.back_button);
+            backButton.Click += (sender, args) => OnBackPressed();
         }
 
         public void PictureButtonClick(object sender, EventArgs args)
