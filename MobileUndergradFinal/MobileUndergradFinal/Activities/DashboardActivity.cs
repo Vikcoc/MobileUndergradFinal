@@ -123,9 +123,8 @@ namespace MobileUndergradFinal.Activities
 
         public void AddContributionPicture(Guid contributionId, Stream image)
         {
-            var bitmap = BitmapHelper.GetOfScale(Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                image);
+            var bitmap = image.GetOfScale(Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
+                Resources.GetDimensionPixelSize(Resource.Dimension.image_size));
             _contributionListingAdapter.AddPicture(contributionId, bitmap);
         }
 
@@ -167,9 +166,8 @@ namespace MobileUndergradFinal.Activities
         }
         public void AddPlacePicture(Guid placeId, Stream image)
         {
-            var bitmap = BitmapHelper.GetOfScale(Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                image);
+            var bitmap = image.GetOfScale(Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
+                Resources.GetDimensionPixelSize(Resource.Dimension.image_size));
             _fountainsAdapter.AddPicture(placeId, bitmap);
         }
 

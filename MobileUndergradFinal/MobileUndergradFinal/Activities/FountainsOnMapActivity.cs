@@ -82,9 +82,8 @@ namespace MobileUndergradFinal.Activities
 
         public void AddSelectedPlacePicture(Stream image)
         {
-            var bitmap = BitmapHelper.GetOfScale(Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                image);
+            var bitmap = image.GetOfScale(Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
+                Resources.GetDimensionPixelSize(Resource.Dimension.image_size));
             _sheet.FindViewById<ImageView>(Resource.Id.imageView2).SetImageBitmap(bitmap);
         }
 

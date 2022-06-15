@@ -15,7 +15,7 @@ namespace MobileUndergradFinal.Helper
             bitmap.Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
         }
 
-        public static Bitmap GetOfScale(int intendedWidth, int intendedHeight, Stream imageStream)
+        public static Bitmap GetOfScale(this Stream imageStream, int intendedWidth, int intendedHeight)
         {
             var bmOptions = new BitmapFactory.Options { InJustDecodeBounds = true };
 
@@ -34,9 +34,9 @@ namespace MobileUndergradFinal.Helper
             return BitmapFactory.DecodeStream(imageStream, null, bmOptions);
         }
 
-        public static Bitmap GetRotated(int intendedWidth, int intendedHeight, Stream imageStream)
+        public static Bitmap GetRotated(this Stream imageStream, int intendedWidth, int intendedHeight)
         {
-            var bm = GetOfScale(intendedWidth, intendedHeight, imageStream);
+            var bm = imageStream.GetOfScale(intendedWidth, intendedHeight);
             imageStream.Seek(0, SeekOrigin.Begin);
             var exif = new ExifInterface(imageStream);
             var orientation = (Orientation)exif.GetAttributeInt(ExifInterface.TagOrientation,

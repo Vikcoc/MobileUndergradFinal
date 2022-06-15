@@ -66,7 +66,23 @@ namespace MobileUndergradFinal.Activities
 
         public decimal? Longitude => _longitude;
 
-        public List<Stream> Pictures => _pictureAdapter.Pictures.Select(x => ContentResolver.OpenInputStream(x)).ToList();
+        public List<Stream> Pictures {
+            get
+            {
+                var x =_pictureAdapter.Pictures.Select(x => ContentResolver.OpenInputStream(x).GetRotated(Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
+                        Resources.GetDimensionPixelSize(Resource.Dimension.image_size)))
+                    .Select(x =>
+                    {
+                        var str = new MemoryStream();
+                        x.WriteToStream(str);
+                        str.Seek(0, SeekOrigin.Begin);
+                        return (Stream) str;
+                    })
+                    .ToList();
+                return x;
+            }
+        }
+
 
         public string NicknameError
         {
@@ -243,9 +259,8 @@ namespace MobileUndergradFinal.Activities
 
         public void AddPicture(Guid variantId, Stream picture)
         {
-            var bitmap = BitmapHelper.GetOfScale(Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                picture);
+            var bitmap = picture.GetRotated(Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
+                Resources.GetDimensionPixelSize(Resource.Dimension.image_size));
             _fountainsTypeAdapter.AddPicture(variantId, bitmap);
             if (VariantId.HasValue && VariantId.Value == variantId)
                 _selectedView.FindViewById<ImageView>(Resource.Id.imageView2).SetImageBitmap(bitmap);
@@ -303,10 +318,9 @@ namespace MobileUndergradFinal.Activities
                         {
                             var uri = res.GetItemAt(i).Uri;
                             var stream = ContentResolver.OpenInputStream(uri);
-                            var bitmap = BitmapHelper.GetRotated(
+                            var bitmap = stream.GetRotated(
                                 Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                                Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                                stream);
+                                Resources.GetDimensionPixelSize(Resource.Dimension.image_size));
                             pictures.Add((uri, bitmap));
                         }
                         _pictureAdapter.AddImages(pictures);
@@ -314,10 +328,9 @@ namespace MobileUndergradFinal.Activities
                     else
                     {
                         var stream = ContentResolver.OpenInputStream(data.Data);
-                        var bitmap = BitmapHelper.GetRotated(
+                        var bitmap = stream.GetRotated(
                             Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                            Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                            stream);
+                            Resources.GetDimensionPixelSize(Resource.Dimension.image_size));
                         _pictureAdapter.AddImages(new List<(Uri, Bitmap)>{(data.Data, bitmap) });
                     }
 
@@ -327,10 +340,9 @@ namespace MobileUndergradFinal.Activities
                 {
                     _pictureButton.Error = null;
                     var stream = ContentResolver.OpenInputStream(_photoURI);
-                    var bitmap = BitmapHelper.GetRotated(
+                    var bitmap = stream.GetRotated(
                         Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                        Resources.GetDimensionPixelSize(Resource.Dimension.image_size),
-                        stream);
+                        Resources.GetDimensionPixelSize(Resource.Dimension.image_size));
                     _pictureAdapter.AddImages(new List<(Uri, Bitmap)> { (_photoURI, bitmap) });
                     break;
                 }
