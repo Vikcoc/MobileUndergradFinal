@@ -19,6 +19,17 @@
 		map:uiRotateGestures="true"
 		map:uiTiltGestures ="true"/>
 
+	<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+		android:id="@+id/extended_fab"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:layout_gravity="top|center"
+		android:contentDescription="@string/on_map_search"
+		android:text="@string/on_map_search"
+		app:icon="@drawable/search"
+		android:visibility="invisible"/>
+
 	<com.google.android.material.floatingactionbutton.FloatingActionButton
 		android:id="@+id/fab_locate"
 		android:layout_width="wrap_content"

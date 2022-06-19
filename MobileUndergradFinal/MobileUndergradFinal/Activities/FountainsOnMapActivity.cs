@@ -33,6 +33,7 @@ namespace MobileUndergradFinal.Activities
         private Guid? _pinSelected;
         private ConstraintLayout _sheet;
         private Marker _lastClickedMarker;
+        private ExtendedFloatingActionButton _floatingActionButton;
 
 
         public FountainsOnMapActivity()
@@ -62,9 +63,6 @@ namespace MobileUndergradFinal.Activities
         {
             set
             {
-                var selected = Intent.GetStringExtra("placeId");
-                if (!string.IsNullOrWhiteSpace(selected))
-                    _pinSelected = Guid.Parse(selected);
                 foreach (var dto in value)
                 {
                     var marker = _map.AddMarker(new MarkerOptions()
@@ -94,6 +92,10 @@ namespace MobileUndergradFinal.Activities
             SetContentView(Resource.Layout.map_with_fountains);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
+            var selected = Intent.GetStringExtra("placeId");
+            if (!string.IsNullOrWhiteSpace(selected))
+                _pinSelected = Guid.Parse(selected);
+
             var mapFragment = (SupportMapFragment)SupportFragmentManager.FindFragmentById(Resource.Id.map);
             mapFragment.GetMapAsync(this);
 
@@ -102,8 +104,19 @@ namespace MobileUndergradFinal.Activities
             ((_sheet.LayoutParameters as CoordinatorLayout.LayoutParams).Behavior as BottomSheetBehavior).State = BottomSheetBehavior.StateHidden;
 
 
-            
-            
+            _floatingActionButton = FindViewById<ExtendedFloatingActionButton>(Resource.Id.extended_fab);
+            _floatingActionButton.Click += async (sender, args) =>
+            {
+                _map.Clear();
+                var sheet = _sheet.LayoutParameters as CoordinatorLayout.LayoutParams;
+                (sheet.Behavior as BottomSheetBehavior).Hideable = true;
+                (sheet.Behavior as BottomSheetBehavior).State = BottomSheetBehavior.StateHidden;
+                _pinSelected = null;
+                _contributionsAdapter.SetItems(new List<WaterSourceContributionDto>());
+                await _logic.GetPlacesAroundMap();
+                _floatingActionButton.Hide();
+            };
+
 
             var button = _sheet.FindViewById<Button>(Resource.Id.button1);
             button.Click += (sender, args) =>
@@ -223,6 +236,8 @@ namespace MobileUndergradFinal.Activities
             {
                 if(_pinSelected.HasValue)
                     (sheet.Behavior as BottomSheetBehavior).State = BottomSheetBehavior.StateCollapsed;
+
+                _floatingActionButton.Show();
             };
 
             _map.MapClick += (sender, args) =>

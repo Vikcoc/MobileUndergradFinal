@@ -65,6 +65,7 @@
 	<string name="on_map_specify_infirm_incident">"Infirm incident"</string>
 	<string name="on_map_specify_confirm_incident">"Confirm incident"</string>
 	<string name="on_map_specify_remove_incident">"Remove incident"</string>
+	<string name="on_map_search">"Search area"</string>
 
 	<!--Map-->
 	<string name="map_address_error">"Error: What you're looking at not found"</string>
