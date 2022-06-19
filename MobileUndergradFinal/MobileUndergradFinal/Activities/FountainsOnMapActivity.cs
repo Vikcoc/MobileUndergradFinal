@@ -32,6 +32,7 @@ namespace MobileUndergradFinal.Activities
         private readonly FountainsOnMapLogic _logic;
         private Guid? _pinSelected;
         private ConstraintLayout _sheet;
+        private Marker _lastClickedMarker;
 
 
         public FountainsOnMapActivity()
@@ -117,10 +118,12 @@ namespace MobileUndergradFinal.Activities
                 rightButton.Click += async (o, eventArgs) =>
                 {
                     await _logic.AddRightContributionAsync(action, input.Text, _pinSelected.Value);
+                    MarkerClicked(_lastClickedMarker);
                 };
                 leftButton.Click += async (o, eventArgs) =>
                 {
                     await _logic.AddLeftContributionAsync(input.Text, _pinSelected.Value);
+                    MarkerClicked(_lastClickedMarker);
                 };
 
                 switch (action)
@@ -236,6 +239,7 @@ namespace MobileUndergradFinal.Activities
 
         private async void MarkerClicked(Marker marker)
         {
+            _lastClickedMarker = marker;
             var id = Guid.Parse((string)marker.Tag);
             _pinSelected = id;
             marker.ShowInfoWindow();
