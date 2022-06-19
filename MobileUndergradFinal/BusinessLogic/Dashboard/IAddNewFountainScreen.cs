@@ -28,5 +28,6 @@ namespace BusinessLogic.Dashboard
         string MapErrorText { get; }
         string VariantErrorText { get; }
         string PicturesErrorText { get; }
+        void GoBack();
     }
 }

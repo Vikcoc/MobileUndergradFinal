@@ -73,12 +73,24 @@ namespace MobileUndergradFinal.Activities
 
             _welcome = FindViewById<TextView>(Resource.Id.textView3);
 
-            OnCreated();
+            
         }
 
-        private async void OnCreated()
+        protected override async void OnPostResume()
         {
+            base.OnPostResume();
             await OnScreenVisible();
+
+            if (this.CheckSelfPermission(Android.Manifest.Permission.AccessFineLocation) == (int)Permission.Granted && this.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) == (int)Permission.Granted)
+            {
+                _map.MyLocationEnabled = true;
+
+                var locationProvider = LocationServices.GetFusedLocationProviderClient(this);
+                var x = await locationProvider.GetLastLocationAsync();
+
+                _map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(new LatLng(x.Latitude, x.Longitude), 15));
+            }
+            await _dashboard.GetPlacesAroundMap();
         }
 
         public void MoveToAddNewFountain()
@@ -99,7 +111,7 @@ namespace MobileUndergradFinal.Activities
         {
             set
             {
-                _contributionListingAdapter.AddItems(value.Select(x => new WaterSourceContributionWithPlace
+                _contributionListingAdapter.SetItems(value.Select(x => new WaterSourceContributionWithPlace
                 {
                     Id = x.Id,
                     WaterSourcePlaceId = x.WaterSourcePlaceId,
@@ -137,7 +149,7 @@ namespace MobileUndergradFinal.Activities
         {
             set
             {
-                _fountainsAdapter.AddItems(value.Take(5).Select(x => new WaterSourcePlaceListingWithContribution
+                _fountainsAdapter.SetItems(value.Take(5).Select(x => new WaterSourcePlaceListingWithContribution
                 {
                     Id = x.Id,
                     Latitude = x.Latitude,
@@ -177,16 +189,6 @@ namespace MobileUndergradFinal.Activities
 
             _map.UiSettings.MyLocationButtonEnabled = false;
 
-            if (this.CheckSelfPermission(Android.Manifest.Permission.AccessFineLocation) == (int)Permission.Granted && this.CheckSelfPermission(Android.Manifest.Permission.AccessCoarseLocation) == (int)Permission.Granted)
-            {
-                map.MyLocationEnabled = true;
-
-                var locationProvider = LocationServices.GetFusedLocationProviderClient(this);
-                var x = await locationProvider.GetLastLocationAsync();
-
-                map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(new LatLng(x.Latitude, x.Longitude), 15));
-            }
-
             _map.MapClick += (sender, args) =>
             {
                 OnMapPress?.Invoke();
@@ -196,8 +198,6 @@ namespace MobileUndergradFinal.Activities
             {
                 OnMapPress?.Invoke();
             };
-
-            await _dashboard.GetPlacesAroundMap();
         }
 
         public void MoveToMap(Guid? placeId = null)

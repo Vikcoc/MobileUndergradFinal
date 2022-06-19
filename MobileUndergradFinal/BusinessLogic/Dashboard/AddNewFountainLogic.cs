@@ -153,6 +153,7 @@ namespace BusinessLogic.Dashboard
                     case ErrorType.None:
                     {
                         _addNewFountainScreen.DisplayError("Done");
+                        _addNewFountainScreen.GoBack();
                             break;
                     }
                     case ErrorType.Actionable:

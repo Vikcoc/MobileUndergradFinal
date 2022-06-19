@@ -81,14 +81,15 @@ namespace MobileUndergradFinal.Adapters
 
         public override int ItemCount => _contributions.Count == 0 ? 1 : _contributions.Count;
 
-        public void AddItems(List<WaterSourceContributionWithPlace> items)
+        public void SetItems(List<WaterSourceContributionWithPlace> items)
         {
-            var current = ItemCount;
+            //var current = ItemCount;
+            _contributions.Clear();
             _contributions.AddRange(items);
-            if (current > 0)
-                NotifyItemRangeInserted(current, items.Count);
-            else
-                NotifyDataSetChanged();
+            //if (current > 0)
+            //    NotifyItemRangeInserted(current, items.Count);
+            //else
+            NotifyDataSetChanged();
         }
 
         public void AddPicture(Guid variantId, Bitmap picture)

@@ -36,9 +36,6 @@ namespace MobileUndergradFinal.Activities
     public class AddNewPlaceActivity : TokenAndErrorActivity, IOnMapReadyCallback, IAddNewFountainScreen
     {
         private GoogleMap _map;
-        private string _address;
-        private decimal? _latitude;
-        private decimal? _longitude;
 
         private TextView _nickname;
         private TextInputLayout _nicInputLayout;
@@ -60,11 +57,11 @@ namespace MobileUndergradFinal.Activities
 
         public string Nickname => _nickname.Text;
 
-        public string Address => _address;
+        public string Address { get; private set; }
 
-        public decimal? Latitude => _latitude;
+        public decimal? Latitude { get; private set; }
 
-        public decimal? Longitude => _longitude;
+        public decimal? Longitude { get; private set; }
 
         public List<Stream> Pictures {
             get
@@ -123,6 +120,10 @@ namespace MobileUndergradFinal.Activities
         public string MapErrorText => Resources.GetString(Resource.String.add_place_map_error);
         public string VariantErrorText => Resources.GetString(Resource.String.add_place_variant_error);
         public string PicturesErrorText => Resources.GetString(Resource.String.add_place_pictures_error);
+        public void GoBack()
+        {
+            OnBackPressed();
+        }
 
         private PlacePictureAdapter _pictureAdapter;
 
@@ -180,7 +181,7 @@ namespace MobileUndergradFinal.Activities
                 var imm = (InputMethodManager)this.GetSystemService(InputMethodService);
                 imm.HideSoftInputFromWindow(submitButton.WindowToken, 0);
                 if (OnSubmitButtonPress != null)
-                    await OnSubmitButtonPress.Invoke();
+                    await OnSubmitButtonPress();
             };
 
             var recycler = FindViewById<RecyclerView>(Resource.Id.yourPictures);
@@ -291,9 +292,9 @@ namespace MobileUndergradFinal.Activities
             {
                 case Result.Ok when requestCode == 1:
                 {
-                    _address = data.GetStringExtra("address");
-                    _latitude = Convert.ToDecimal(data.GetDoubleExtra("latitude", 0));
-                    _longitude = Convert.ToDecimal(data.GetDoubleExtra("longitude", 0));
+                    Address = data.GetStringExtra("address");
+                    Latitude = Convert.ToDecimal(data.GetDoubleExtra("latitude", 0));
+                    Longitude = Convert.ToDecimal(data.GetDoubleExtra("longitude", 0));
                     var fountainPosition =
                         new LatLng(data.GetDoubleExtra("latitude", 0), data.GetDoubleExtra("longitude", 0));
                     _map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(fountainPosition, 17));
