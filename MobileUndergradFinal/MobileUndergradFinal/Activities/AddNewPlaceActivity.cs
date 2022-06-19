@@ -128,6 +128,7 @@ namespace MobileUndergradFinal.Activities
         private PlacePictureAdapter _pictureAdapter;
 
         private Uri _photoURI;
+        private Marker _selectedMark;
 
         public AddNewPlaceActivity()
         {
@@ -300,7 +301,8 @@ namespace MobileUndergradFinal.Activities
                     _map.MoveCamera(CameraUpdateFactory.NewLatLngZoom(fountainPosition, 17));
                     _text.Visibility = ViewStates.Gone;
                     _cover.Background = null;
-                    _map.AddMarker(new MarkerOptions()
+                    _selectedMark?.Remove();
+                    _selectedMark = _map.AddMarker(new MarkerOptions()
                         .SetPosition(fountainPosition)
                         .SetTitle("Selected position"));
                     MapError = "";
